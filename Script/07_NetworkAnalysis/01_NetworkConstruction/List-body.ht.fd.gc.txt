@@ -1,0 +1,110 @@
+1/3-Methylhistidine
+2-Hydroxyglutarate
+2/3-Phosphoglycerate
+4-Hydroxybutyrate
+4-Pyridoxic acid
+5-Aminopentanoic acid
+8-Hydroxy-deoxyguanosine
+13-HODE
+Acetoacetate
+Acetylcholine
+Aconitate
+Adenine
+Adenosine
+Adipic acid
+Agmatine
+Alanine
+Allantoin
+Alpha-Ketoglutarate
+AMP
+Anthranilate
+Arginine
+Ascorbate
+Asparagine
+Aspartate
+Azelaic acid
+Beta-Hydroxybutyrate
+Betaine
+Biotin
+Cadaverine
+Carnitine
+Citraconate
+CMP
+Cystine
+Cytidine
+Cytosine
+D-Glyceraldehyde 3-phosphate
+Deoxycarnitine
+Dimethylglycine
+F16BP/F26BP/G16BP
+Fructose
+Fumarate
+G1P/G6P/F6P/F1P
+Gamma-Aminobutyrate
+Geranyl-pyrophosphate
+Glucosamine
+Glucose
+Glucuronate
+Glutamic acid
+Glutamine
+Glyceraldehyde
+Glycerate
+GMP
+Guanosine
+Histamine
+Histidine
+Hypoxanthine
+IMP
+Inosine
+Inositol
+Isoleucine
+Isovalerate
+Kynurenate
+L-Kynurenine
+Lactate
+Lactose
+Leucine
+Linoleate
+Linolenate
+Lysine
+Maleate
+Malondialdehyde
+Margaric acid
+Methionine
+Mevalonate
+Myristic acid
+N-Acetylglycine
+Nicotinate
+Ornithine
+Orotate
+Oxaloacetate
+Oxidized glutathione
+Oxypurinol
+Pantothenate
+Phenylalanine
+Pipecolate
+PLP
+Proline
+Putrescine
+Pyroglutamate
+Pyruvate
+Reduced glutathione
+Ribose-5-phosphate
+Serine
+Sorbitol
+Succinate
+Sucrose
+Taurine
+Threonine
+Trimethylamine
+Tryptamine
+Tryptophan
+Tyrosine
+UDP
+Uracil
+Urate
+Uridine
+Valine
+Xanthine
+Xanthosine
+Xanthurenate

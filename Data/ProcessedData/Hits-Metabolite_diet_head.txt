@@ -1,0 +1,45 @@
+4-Hydroxybutyrate
+4-Hydroxyphenylpyruvate
+5-Aminopentanoic acid
+Acetylcarnitine
+Aconitate
+Alanine
+AMP
+Anthranilate
+Azelaic acid
+Beta-Aminoisobutyrate
+Beta-Hydroxybutyrate
+Betaine
+Biotin
+Citrulline
+CMP
+Cystathionine
+Cysteine
+Cystine
+Dimethylglycine
+Geranyl-pyrophosphate
+Glucosamine
+Glucuronate
+Glycerate
+Glycerol 3-phosphate
+Glycine
+GMP
+Guanosine
+Histidine
+IMP
+Isoleucine
+Lactate
+Leucine
+Linoleate
+Linolenate
+Methionine
+Orotate
+Phenylalanine
+Proline
+Pyruvate
+Ribose-5-phosphate
+Serine
+Tyrosine
+Uridine
+Valine
+Xanthosine

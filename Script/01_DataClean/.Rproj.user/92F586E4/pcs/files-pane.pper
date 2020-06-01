@@ -1,0 +1,9 @@
+{
+    "path" : "~/Research/Project/Metabolomics/ChoiceDiet/Data",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

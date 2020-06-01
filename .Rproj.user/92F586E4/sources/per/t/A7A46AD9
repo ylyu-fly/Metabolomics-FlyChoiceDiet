@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1590953383717.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "7|23|11|0|\n12|13|16|0|\n17|13|40|0|\n41|23|248|0|\n249|24|276|0|\n277|21|346|0|\n347|14|380|0|\n",
+    "hash" : "1438647936",
+    "id" : "A7A46AD9",
+    "lastKnownWriteTime" : 1590955088,
+    "last_content_update" : 1590955088124,
+    "path" : "~/Research/Data/Metabolomics/FlyChoiceDiet/Script/07_NetworkAnalysis/01_NetworkConstruction/NetworkConstruction.R",
+    "project_path" : "Script/07_NetworkAnalysis/01_NetworkConstruction/NetworkConstruction.R",
+    "properties" : {
+        "cursorPosition" : "40,0",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
