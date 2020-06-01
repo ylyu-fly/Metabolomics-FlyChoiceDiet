@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1590957734176.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "7|23|10|0|\n11|13|14|0|\n15|22|228|27|\n",
+    "hash" : "3837499537",
+    "id" : "D4644BD5",
+    "lastKnownWriteTime" : 1591024546,
+    "last_content_update" : 1591024556117,
+    "path" : "~/Research/Data/Metabolomics/FlyChoiceDiet/Script/07_NetworkAnalysis/03_NetworkModularity/NetworkModularity.R",
+    "project_path" : "Script/07_NetworkAnalysis/03_NetworkModularity/NetworkModularity.R",
+    "properties" : {
+        "cursorPosition" : "1,12",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

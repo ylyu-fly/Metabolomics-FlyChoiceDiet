@@ -1,0 +1,45 @@
+2-Hydroxyglutarate
+5-Aminopentanoic acid
+Acetoacetate
+Acetylcholine
+Aconitate
+Adipic acid
+ADP
+Alpha-Ketoglutarate
+Asparagine
+Biotin
+Citrulline
+Cytidine
+Dimethylglycine
+G1P/G6P/F6P/F1P
+Gamma-Aminobutyrate
+Glucosamine
+Glucose
+Glutamic acid
+Glutamine
+Glutarate
+Glyceraldehyde
+Glycerol 3-phosphate
+Hypoxanthine
+IMP
+Inosine
+Inositol
+Isoleucine
+Isovalerate
+Lactate
+Lactose
+Leucine
+Linoleate
+Linolenate
+Malondialdehyde
+Margaric acid
+Methionine
+Oxaloacetate
+Oxidized glutathione
+Pyruvate
+Uracil
+Urate
+Uridine
+Valine
+Xanthine
+Xanthosine

@@ -1,0 +1,9 @@
+{
+    "path" : "~/Research/Data/Metabolomics/FlyChoiceDiet/Script/03_Normalization",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

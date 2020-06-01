@@ -1,0 +1,47 @@
+1-Methylhistidine
+3-Methylhistidine
+2-Hydroxyglutarate
+4-Pyridoxic acid
+5-Aminopentanoic acid
+13-HODE
+Acetoacetate
+Acetylcarnitine
+Acetylcholine
+Aconitate
+Adenine
+Adipic acid
+Agmatine
+Ascorbate
+Azelaic acid
+Beta-Aminoisobutyrate
+Beta-Hydroxybutyrate
+Betaine
+Cadaverine
+Carnitine
+Choline
+Cystine
+Cytosine
+Deoxycarnitine
+Dimethylglycine
+Gamma-Aminobutyrate
+Geranyl-pyrophosphate
+Glutamic acid
+Glycerate
+IMP
+Isoleucine
+L-Kynurenine
+Lactate
+Leucine
+Maleate
+PLP
+Proline
+Putrescine
+Serine
+Sorbitol
+Sucrose
+Taurine
+Threonine
+Trimethylamine
+Tyrosine
+UDP
+Valine

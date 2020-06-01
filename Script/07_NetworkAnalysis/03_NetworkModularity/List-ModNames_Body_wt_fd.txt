@@ -1,0 +1,41 @@
+1/3-Methylhistidine
+2-Hydroxyglutarate
+5-Aminopentanoic acid
+13-HODE
+Alpha-Ketoglutarate
+Anthranilate
+Asparagine
+Aspartate
+Citrulline
+CMP
+Cystine
+D-Glyceraldehyde 3-phosphate
+F16BP/F26BP/G16BP
+G1P/G6P/F6P/F1P
+Gamma-Aminobutyrate
+Glutamine
+GMP
+Hypoxanthine
+Inosine
+Isoleucine
+Isovalerate
+Lactate
+Lactose
+Leucine
+Linolenate
+Malondialdehyde
+Margaric acid
+Myristic acid
+Nicotinate
+Orotate
+Oxaloacetate
+Oxidized glutathione
+Oxypurinol
+Pyroglutamate
+Reduced glutathione
+Ribose-5-phosphate
+Tryptophan
+Urate
+Valine
+Xanthine
+Xanthosine

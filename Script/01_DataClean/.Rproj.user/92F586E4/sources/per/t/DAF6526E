@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1516721921341.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1026063251",
+    "id" : "DAF6526E",
+    "lastKnownWriteTime" : 1516721672,
+    "last_content_update" : 1516721672,
+    "path" : "~/Research/Project/Metabolomics/ChoiceDiet/Data/01_DataClean/01_DataClean_Head.R",
+    "project_path" : "01_DataClean_Head.R",
+    "properties" : {
+        "cursorPosition" : "26,64",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

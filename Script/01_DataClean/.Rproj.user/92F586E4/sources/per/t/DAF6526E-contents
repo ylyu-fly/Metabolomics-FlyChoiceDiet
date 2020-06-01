@@ -1,0 +1,111 @@
+## Subject: Data Clean (head)
+## Project: Choice Diet
+## Part: 1
+## Author: Yang Lyu
+## Date created: 12/02/2017
+## Date modified: 01/23/2018
+
+rm(list = ls())
+
+library(gtools)
+library(impute)
+
+# STEP 1 - Data Input
+## path
+path <- "/Users/Yang/Research/Project/Metabolomics/ChoiceDiet/Data/01_DataClean/"
+setwd(path)
+
+## file name
+head.id <- "ChoiceDiet_Head"
+head.metabolite.file <- paste("RawData_", head.id, "_metabolite.txt", sep = "")
+head.qc.file <- paste("RawData_", head.id, "_qc.txt", sep = "")
+head.sampleinfo.file <- paste("SampleInfo_", head.id, ".txt", sep = "")
+
+## Read data
+options(stringsAsFactors = F)
+head.metabolite.data <- read.table(head.metabolite.file, sep = "\t", header = T)
+head.qc.data <- read.table(head.qc.file, sep = "\t", header = T)
+head.sampleinfo.data <- read.table(head.sampleinfo.file, sep = "\t", header = T)
+
+# STEP 2 - Data Preprocessing
+## Re-format sample name
+head.sampleinfo.data$SampleID <- paste("X", head.sampleinfo.data$SampleID, sep = "") 
+### Above step only required for Sample ID started with numbers
+head.colnames <- head.sampleinfo.data$SampleName[match(names(head.metabolite.data), head.sampleinfo.data$SampleID)]
+names(head.metabolite.data)[!is.na(head.colnames)] <- head.colnames[!is.na(head.colnames)]
+
+## Test whether metabolite and qc samples have the same rownames
+length(match(head.metabolite.data[ , 1], head.qc.data[ , 1]))
+length(match(head.metabolite.data[ , 2], head.qc.data[ , 2]))
+### Continue if 206 metabolites in total
+
+## Clean metabolite data
+### Re-order the column names based on sample ID
+head.metabolite.data <- head.metabolite.data[ , c(1:2, 2 + mixedorder(names(head.metabolite.data[ , -(1:2)])))]
+### Convert data frame to numeric (matrix)
+head.metabolite.rows <- head.metabolite.data[ , 1]
+head.metabolite.cols <- names(head.metabolite.data[ , -(1:2)])
+head.metabolite.data <- sapply(head.metabolite.data[ , -(1:2)], function(x) as.numeric(as.character(x)))
+rownames(head.metabolite.data) <- head.metabolite.rows
+colnames(head.metabolite.data) <- head.metabolite.cols
+
+## Clean QC data
+### Clean head QC data
+head.qc.rows <- head.qc.data[ , 1]
+head.qc.cols <- names(head.qc.data[ , -(1:2)])
+### Convert data frame to numeric (matrix)
+head.qc.data <- sapply(head.qc.data[ , -(1:2)], function(x) as.numeric(as.character(x)))
+rownames(head.qc.data) <- head.qc.rows
+colnames(head.qc.data) <- head.qc.cols
+dim(head.qc.data)
+
+# STEP 3 - Data Distribution
+
+## Plot Sample and log10 Sample
+### Modify plot paramters
+par(mfrow = c(1,2), mar = c(4, 4, 1, 0) + 0.5, mgp = c(2, 0, 0) + 0.2)
+### Look at distribution of raw and log-transformed data
+hist(head.metabolite.data, 50, main = "Raw") 
+hist(log10(head.metabolite.data), 50, main = "Log10 transformation")
+### After log-transformation, data look normal distributed
+### Use log10 QC for further analysis
+head.metabolite.data.log <- log10(head.metabolite.data)
+head.metabolite.data.log[head.metabolite.data.log == 0] <- NA
+
+## Plot QC
+par(mfrow = c(1,3), mar = c(4, 4, 1, 0) + 0.5, mgp = c(2, 0, 0) + 0.2)
+### Calculate signal-to-noise ratio
+head.qc.snr <- apply(head.qc.data, 1, mean, na.rm = T) / apply(head.qc.data, 1, sd, na.rm = T) 
+### Calculate missing metabolites
+head.qc.missing <- apply(is.na(head.qc.data), 1, sum)
+### Calculate means by log-transformed metabolites
+head.metabolite.means <- apply(head.metabolite.data.log, 1, mean, na.rm = T)
+### Plot Signal-to-Noise Ratio (SNR)
+hist(log10(head.qc.snr), 50)
+abline(v = 1, col = "red", lty = 2, lwd = 2)
+### Plot means vs missing number
+plot(c(0, 9), tapply(head.metabolite.means, head.qc.missing, mean, na.rm = T), 
+     ylab="mean metabolite val", pch = 16)
+### Missing QC metabolites are significantly expressed lower
+### Plot missing number vs SNR
+plot(head.qc.missing, head.qc.snr, pch = 16, cex = .5)
+
+# STEP 4 - Remove metabolite with missing entries
+## Calculate frequency of zeros by metabolite and sample
+### Combine head and body
+### Total number: 154 samples, 206 metabolites 
+metabolite.data.log <- head.metabolite.data.log
+metabolite.zeros <- apply(is.na(metabolite.data.log), 1, sum)
+table(metabolite.zeros)
+sample.zeros <- apply(is.na(metabolite.data.log), 2, sum)
+table(sample.zeros)
+K  <- 8
+### K = 2 for 154 samples, need to set for different sample size (advised by Daniel)
+data.cut <- metabolite.data.log[metabolite.zeros < K, ]
+
+# STEP 5 - Imputation
+## Impute using the KNN algorithm. (Uses 'impute' package in 'Bioconductor')
+data.imputed <- (impute.knn(data.cut))$data
+
+result.file <- "CleanData_ChoiceDiet_Head.RDS"
+saveRDS(data.imputed, file = result.file)
