@@ -9,6 +9,7 @@
 library(igraph)
 library(gtools)
 library(UpSetR)
+library(MetaboAnalystR)
 
 # Data Input --------------------------------------------------------------
 ## Read data
@@ -344,6 +345,83 @@ upset(fromList(body.lt),
       sets.x.label = "Core Size",
       mainbar.y.label = "Metabolite Intersections",
       order.by = "freq")
+
+
+# Pathway Analysis --------------------------------------------------------
+## Initiate Data Objects
+head.wt.fd.gc.mSet <- InitDataObjects("conc", "pathora", FALSE)
+head.wt.cd.gc.mSet <- InitDataObjects("conc", "pathora", FALSE)
+head.ht.fd.gc.mSet <- InitDataObjects("conc", "pathora", FALSE)
+head.ht.cd.gc.mSet <- InitDataObjects("conc", "pathora", FALSE)
+
+body.wt.fd.gc.mSet <- InitDataObjects("conc", "pathora", FALSE)
+body.wt.cd.gc.mSet <- InitDataObjects("conc", "pathora", FALSE)
+body.ht.fd.gc.mSet <- InitDataObjects("conc", "pathora", FALSE)
+body.ht.cd.gc.mSet <- InitDataObjects("conc", "pathora", FALSE)
+
+## Set up mSetObj with the list of compounds
+head.wt.fd.gc.mSet <- Setup.MapData(head.wt.fd.gc.mSet, V(head.wt.fd.gc)$name)
+head.wt.cd.gc.mSet <- Setup.MapData(head.wt.cd.gc.mSet, V(head.wt.cd.gc)$name)
+head.ht.fd.gc.mSet <- Setup.MapData(head.ht.fd.gc.mSet, V(head.ht.fd.gc)$name)
+head.ht.cd.gc.mSet <- Setup.MapData(head.ht.cd.gc.mSet, V(head.ht.cd.gc)$name)
+
+body.wt.fd.gc.mSet <- Setup.MapData(body.wt.fd.gc.mSet, V(body.wt.fd.gc)$name)
+body.wt.cd.gc.mSet <- Setup.MapData(body.wt.cd.gc.mSet, V(body.wt.cd.gc)$name)
+body.ht.fd.gc.mSet <- Setup.MapData(body.ht.fd.gc.mSet, V(body.ht.fd.gc)$name)
+body.ht.cd.gc.mSet <- Setup.MapData(body.ht.cd.gc.mSet, V(body.ht.cd.gc)$name)
+
+## Cross reference list of compounds against libraries 
+head.wt.fd.gc.mSet <- CrossReferencing(head.wt.fd.gc.mSet, "name")
+head.wt.cd.gc.mSet <- CrossReferencing(head.wt.cd.gc.mSet, "name")
+head.ht.fd.gc.mSet <- CrossReferencing(head.ht.fd.gc.mSet, "name")
+head.ht.cd.gc.mSet <- CrossReferencing(head.ht.cd.gc.mSet, "name")
+
+body.wt.fd.gc.mSet <- CrossReferencing(body.wt.fd.gc.mSet, "name")
+body.wt.cd.gc.mSet <- CrossReferencing(body.wt.cd.gc.mSet, "name")
+body.ht.fd.gc.mSet <- CrossReferencing(body.ht.fd.gc.mSet, "name")
+body.ht.cd.gc.mSet <- CrossReferencing(body.ht.cd.gc.mSet, "name")
+
+## Create the mapping results table
+head.wt.fd.gc.mSet <- CreateMappingResultTable(head.wt.fd.gc.mSet)
+head.wt.cd.gc.mSet <- CreateMappingResultTable(head.wt.cd.gc.mSet)
+head.ht.fd.gc.mSet <- CreateMappingResultTable(head.ht.fd.gc.mSet)
+head.ht.cd.gc.mSet <- CreateMappingResultTable(head.ht.cd.gc.mSet)
+
+body.wt.fd.gc.mSet <- CreateMappingResultTable(body.wt.fd.gc.mSet)
+body.wt.cd.gc.mSet <- CreateMappingResultTable(body.wt.cd.gc.mSet)
+body.ht.fd.gc.mSet <- CreateMappingResultTable(body.ht.fd.gc.mSet)
+body.ht.cd.gc.mSet <- CreateMappingResultTable(body.ht.cd.gc.mSet)
+
+## KEGG Enrichment Test
+head.wt.fd.gc.mSet <- SetKEGG.PathLib(head.wt.fd.gc.mSet, "dme", "current")
+head.wt.cd.gc.mSet <- SetKEGG.PathLib(head.wt.cd.gc.mSet, "dme", "current")
+head.ht.fd.gc.mSet <- SetKEGG.PathLib(head.ht.fd.gc.mSet, "dme", "current")
+head.ht.cd.gc.mSet <- SetKEGG.PathLib(head.ht.cd.gc.mSet, "dme", "current")
+
+body.wt.fd.gc.mSet <- SetKEGG.PathLib(body.wt.fd.gc.mSet, "dme", "current")
+body.wt.cd.gc.mSet <- SetKEGG.PathLib(body.wt.cd.gc.mSet, "dme", "current")
+body.ht.fd.gc.mSet <- SetKEGG.PathLib(body.ht.fd.gc.mSet, "dme", "current")
+body.ht.cd.gc.mSet <- SetKEGG.PathLib(body.ht.cd.gc.mSet, "dme", "current")
+
+head.wt.fd.gc.mSet <- SetMetabolomeFilter(head.wt.fd.gc.mSet, F)
+head.wt.cd.gc.mSet <- SetMetabolomeFilter(head.wt.cd.gc.mSet, F)
+head.ht.fd.gc.mSet <- SetMetabolomeFilter(head.ht.fd.gc.mSet, F)
+head.ht.cd.gc.mSet <- SetMetabolomeFilter(head.ht.cd.gc.mSet, F)
+
+body.wt.fd.gc.mSet <- SetMetabolomeFilter(body.wt.fd.gc.mSet, F)
+body.wt.cd.gc.mSet <- SetMetabolomeFilter(body.wt.cd.gc.mSet, F)
+body.ht.fd.gc.mSet <- SetMetabolomeFilter(body.ht.fd.gc.mSet, F)
+body.ht.cd.gc.mSet <- SetMetabolomeFilter(body.ht.cd.gc.mSet, F)
+
+head.wt.fd.gc.mSet <- CalculateOraScore(head.wt.fd.gc.mSet, "rbc", "hyperg")
+head.wt.cd.gc.mSet <- CalculateOraScore(head.wt.cd.gc.mSet, "rbc", "hyperg")
+head.ht.fd.gc.mSet <- CalculateOraScore(head.ht.fd.gc.mSet, "rbc", "hyperg")
+head.ht.cd.gc.mSet <- CalculateOraScore(head.ht.cd.gc.mSet, "rbc", "hyperg")
+
+body.wt.fd.gc.mSet <- CalculateOraScore(body.wt.fd.gc.mSet, "rbc", "hyperg")
+body.wt.cd.gc.mSet <- CalculateOraScore(body.wt.cd.gc.mSet, "rbc", "hyperg")
+body.ht.fd.gc.mSet <- CalculateOraScore(body.ht.fd.gc.mSet, "rbc", "hyperg")
+body.ht.cd.gc.mSet <- CalculateOraScore(body.ht.cd.gc.mSet, "rbc", "hyperg")
 
 # Data Output -------------------------------------------------------------
 write(V(head.wt.fd.gc)$name, "Script/07_NetworkAnalysis/01_NetworkConstruction/List-head.wt.fd.gc.txt")

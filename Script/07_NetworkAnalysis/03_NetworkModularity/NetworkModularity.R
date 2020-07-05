@@ -8,6 +8,7 @@
 # Environment Settings ----------------------------------------------------
 library(igraph)
 library(pheatmap)
+library(MetaboAnalystR)
 
 # Data Input --------------------------------------------------------------
 ## Read data
@@ -214,11 +215,6 @@ plot(body.ht.cd.mod, edge.color = body.ht.cd.mod.edge.col,
      main = paste("Body/5-HT2A/CD", paste("N(edge)=", ecount(body.ht.cd.mod), sep = ""), sep ="\n"),
      layout = layout_in_circle, order = body.wt.fd.mod.names)
 
-#plot(clst.head.wt.fd, head.wt.fd.g)
-#plot(clst.head.wt.cd, head.wt.cd.g)
-#plot(clst.head.ht.fd, head.ht.fd.g)
-#plot(clst.head.ht.cd, head.ht.cd.g)
-
 transitivity(head.wt.fd.gc)
 transitivity(head.wt.cd.gc)
 transitivity(head.ht.fd.gc)
@@ -227,3 +223,30 @@ transitivity(body.wt.fd.gc)
 transitivity(body.wt.cd.gc)
 transitivity(body.ht.fd.gc)
 transitivity(body.ht.cd.gc)
+
+# Pathway Analysis --------------------------------------------------------
+## Initiate Data Objects
+head.wt.fd.mod1.mSet <- InitDataObjects("conc", "pathora", FALSE)
+body.wt.fd.mod1.mSet <- InitDataObjects("conc", "pathora", FALSE)
+
+## Set up mSetObj with the list of compounds
+head.wt.fd.mod1.mSet <- Setup.MapData(head.wt.fd.mod1.mSet, head.wt.fd.mod.names)
+body.wt.fd.mod1.mSet <- Setup.MapData(body.wt.fd.mod1.mSet, body.wt.fd.mod.names)
+
+## Cross reference list of compounds against libraries 
+head.wt.fd.mod1.mSet <- CrossReferencing(head.wt.fd.mod1.mSet, "name")
+body.wt.fd.mod1.mSet <- CrossReferencing(body.wt.fd.mod1.mSet, "name")
+
+## Create the mapping results table
+head.wt.fd.mod1.mSet <- CreateMappingResultTable(head.wt.fd.mod1.mSet)
+body.wt.fd.mod1.mSet <- CreateMappingResultTable(body.wt.fd.mod1.mSet)
+
+## KEGG Enrichment Test
+head.wt.fd.mod1.mSet <- SetKEGG.PathLib(head.wt.fd.mod1.mSet, "dme", "current")
+body.wt.fd.mod1.mSet <- SetKEGG.PathLib(body.wt.fd.mod1.mSet, "dme", "current")
+
+head.wt.fd.mod1.mSet <- SetMetabolomeFilter(head.wt.fd.mod1.mSet, F)
+body.wt.fd.mod1.mSet <- SetMetabolomeFilter(body.wt.fd.mod1.mSet, F)
+
+head.wt.fd.mod1.mSet <- CalculateOraScore(head.wt.fd.mod1.mSet, "rbc", "hyperg")
+body.wt.fd.mod1.mSet <- CalculateOraScore(body.wt.fd.mod1.mSet, "rbc", "hyperg")

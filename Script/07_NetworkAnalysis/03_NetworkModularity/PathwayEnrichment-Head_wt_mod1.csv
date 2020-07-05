@@ -1,0 +1,35 @@
+"","Total","Expected","Hits","Raw p","-log(p)","Holm adjust","FDR","Impact"
+"Alanine, aspartate and glutamate metabolism",23,0.92951,7,1.6192e-05,11.031,0.0013115,0.0013115,0.73649
+"Butanoate metabolism",14,0.56579,5,0.00013027,8.9459,0.010422,0.005276,0.5
+"D-Glutamine and D-glutamate metabolism",5,0.20207,3,0.00058211,7.4489,0.045987,0.015717,1
+"Arginine biosynthesis",12,0.48496,4,0.00090623,7.0062,0.070686,0.018351,0.05714
+"Aminoacyl-tRNA biosynthesis",48,1.9398,7,0.0022681,6.0888,0.17464,0.034622,0
+"Purine metabolism",63,2.5461,8,0.0026808,5.9216,0.20374,0.034622,0.21107
+"Valine, leucine and isoleucine biosynthesis",8,0.32331,3,0.002992,5.8118,0.2244,0.034622,0
+"Citrate cycle (TCA cycle)",20,0.80827,4,0.0069951,4.9625,0.51764,0.070826,0.27275
+"Glyoxylate and dicarboxylate metabolism",24,0.96992,4,0.013631,4.2954,0.99503,0.11963,0.075
+"Nitrogen metabolism",5,0.20207,2,0.014769,4.2152,1,0.11963,0
+"Pyruvate metabolism",22,0.8891,3,0.055406,2.8931,1,0.40799,0.16793
+"Valine, leucine and isoleucine degradation",38,1.5357,4,0.06278,2.7681,1,0.42377,0
+"Galactose metabolism",27,1.0912,3,0.091561,2.3907,1,0.5705,0.15536
+"Pantothenate and CoA biosynthesis",18,0.72744,2,0.16237,1.8179,1,0.93943,0
+"Synthesis and degradation of ketone bodies",5,0.20207,1,0.1867,1.6782,1,1,0.6
+"Pyrimidine metabolism",40,1.6165,3,0.21661,1.5296,1,1,0.13054
+"Ascorbate and aldarate metabolism",6,0.24248,1,0.21973,1.5154,1,1,0
+"alpha-Linolenic acid metabolism",8,0.32331,1,0.28189,1.2662,1,1,0
+"Glutathione metabolism",26,1.0508,2,0.28327,1.2613,1,1,0.04167
+"Glycolysis / Gluconeogenesis",26,1.0508,2,0.28327,1.2613,1,1,0.09913
+"Biotin metabolism",10,0.40414,1,0.33921,1.0811,1,1,0.2
+"Arginine and proline metabolism",31,1.2528,2,0.35936,1.0234,1,1,0.11345
+"Glycerophospholipid metabolism",32,1.2932,2,0.3743,0.98271,1,1,0.09023
+"Cysteine and methionine metabolism",32,1.2932,2,0.3743,0.98271,1,1,0.13814
+"Tyrosine metabolism",33,1.3336,2,0.38911,0.9439,1,1,0
+"Glycerolipid metabolism",13,0.52538,1,0.4169,0.8749,1,1,0.21429
+"beta-Alanine metabolism",14,0.56579,1,0.44076,0.81926,1,1,0
+"Starch and sucrose metabolism",14,0.56579,1,0.44076,0.81926,1,1,0.19465
+"Pentose phosphate pathway",22,0.8891,1,0.60022,0.51046,1,1,0
+"Porphyrin and chlorophyll metabolism",24,0.96992,1,0.63255,0.458,1,1,0
+"Phosphatidylinositol signaling system",28,1.1316,1,0.68973,0.37146,1,1,0.04267
+"Inositol phosphate metabolism",28,1.1316,1,0.68973,0.37146,1,1,0.11704
+"Glycine, serine and threonine metabolism",30,1.2124,1,0.71496,0.33552,1,1,0
+"Amino sugar and nucleotide sugar metabolism",34,1.3741,1,0.75956,0.27501,1,1,0

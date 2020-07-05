@@ -15,8 +15,10 @@ library(sva)
 head.edata <- readRDS("Data/ProcessedData/ImputedData-FlyChoiceDiet_Head.RDS")
 body.edata <- readRDS("Data/ProcessedData/ImputedData-FlyChoiceDiet_Body.RDS")
 
-head.pheno <- read.table("Data/RawData/Info-Sample-FlyChoiceDiet_Head.txt", sep = "\t", header = T)
-body.pheno <- read.table("Data/RawData/Info-Sample-FlyChoiceDiet_Body.txt", sep = "\t", header = T)
+head.pheno <- read.table("Data/RawData/Info-Sample-FlyChoiceDiet_Head.txt", 
+                         sep = "\t", header = T)
+body.pheno <- read.table("Data/RawData/Info-Sample-FlyChoiceDiet_Body.txt", 
+                         sep = "\t", header = T)
 
 # Data Clean --------------------------------------------------------------
 rownames(head.pheno) <- head.pheno$SampleName
@@ -35,11 +37,16 @@ head.modcombat <- model.matrix(~1, data = head.pheno)
 body.modcombat <- model.matrix(~1, data = body.pheno)
 
 # Run Combat --------------------------------------------------------------
-head.combat.edata <- ComBat(dat = head.edata, batch = head.batch, mod = head.modcombat, 
-                            par.prior=TRUE, prior.plots=FALSE)
+head.combat.edata <- ComBat(dat = head.edata, 
+                            batch = head.batch, 
+                            mod = head.modcombat, 
+                            par.prior = TRUE, 
+                            prior.plots = FALSE)
 
-body.combat.edata <- ComBat(dat = body.edata, batch = body.batch, mod = body.modcombat, 
-                            par.prior=TRUE, prior.plots=FALSE)
+body.combat.edata <- ComBat(dat = body.edata, 
+                            batch = body.batch, 
+                            mod = body.modcombat, 
+                            par.prior = TRUE, prior.plots = FALSE)
 
 # Run ANOVA ---------------------------------------------------------------
 head.sample <- as.data.frame(matrix(unlist(strsplit(colnames(head.edata), "_")), ncol = 4, byrow = T))
