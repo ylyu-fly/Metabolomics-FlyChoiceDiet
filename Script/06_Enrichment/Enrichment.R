@@ -131,16 +131,3 @@ body.genotype.mSet <- CalculateOraScore(body.genotype.mSet, "rbc", "hyperg")
 
 head.diet.mSet <- CalculateOraScore(head.diet.mSet, "rbc", "hyperg")
 body.diet.mSet <- CalculateOraScore(body.diet.mSet, "rbc", "hyperg")
-
-## Plot the results
-#head.all.mSet <- PlotPathSummary(head.all.mSet, imgName = "Script/06_Enrichment/Pathway-All_head_", format = "pdf", width = NA)
-#body.all.mSet <- PlotPathSummary(body.all.mSet, imgName = "Script/06_Enrichment/Pathway-All_body_", format = "pdf", width = NA)
-
-#head.dxg.mSet <- PlotPathSummary(head.dxg.mSet, imgName = "Script/06_Enrichment/Pathway-Dxg_head_", format = "pdf", width = NA)
-#body.dxg.mSet <- PlotPathSummary(body.dxg.mSet, imgName = "Script/06_Enrichment/Pathway-Dxg_body_", format = "pdf", width = NA)
-
-#head.genotype.mSet <- PlotPathSummary(head.genotype.mSet, imgName = "Script/06_Enrichment/Pathway-Genotype_head_", format = "pdf", width = NA)
-#body.genotype.mSet <- PlotPathSummary(body.genotype.mSet, imgName = "Script/06_Enrichment/Pathway-Genotype_body_", format = "pdf", width = NA)
-
-#head.diet.mSet <- PlotPathSummary(head.diet.mSet, imgName = "Script/06_Enrichment/Pathway-Diet_head_", format = "pdf", width = NA)
-#body.diet.mSet <- PlotPathSummary(body.diet.mSet, imgName = "Script/06_Enrichment/Pathway-Diet_body_", format = "pdf", width = NA)

@@ -1,5 +1,5 @@
 {
-    "path" : "~/Research/Data/Metabolomics/Metabolomics-FlyChoiceDiet/Script/07_NetworkAnalysis/01_NetworkConstruction",
+    "path" : "~/Research/Data/Metabolomics/Metabolomics-FlyChoiceDiet/Script/06_Enrichment",
     "sortOrder" : [
         {
             "ascending" : true,

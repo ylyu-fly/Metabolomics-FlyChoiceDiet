@@ -28,8 +28,10 @@ Betaine
 Biotin
 Cadaverine
 Carnitine
+Choline
 Citraconate
 CMP
+Cystathionine
 Cystine
 Cytidine
 Cytosine
@@ -47,8 +49,11 @@ Glucose
 Glucuronate
 Glutamic acid
 Glutamine
+Glutarate
 Glyceraldehyde
 Glycerate
+Glycerol 3-phosphate
+Glycine
 GMP
 Guanosine
 Histamine
@@ -74,6 +79,7 @@ Methionine
 Mevalonate
 Myristic acid
 N-Acetylglycine
+N-Acetylputrescine
 Nicotinate
 Ornithine
 Orotate
@@ -90,6 +96,7 @@ Pyroglutamate
 Pyruvate
 Reduced glutathione
 Ribose-5-phosphate
+Sarcosine
 Serine
 Sorbitol
 Succinate

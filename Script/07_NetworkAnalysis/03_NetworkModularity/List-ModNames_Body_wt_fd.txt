@@ -2,40 +2,71 @@
 2-Hydroxyglutarate
 5-Aminopentanoic acid
 13-HODE
+Acetoacetate
+Aconitate
+Adenosine
+Adipic acid
+Agmatine
 Alpha-Ketoglutarate
+AMP
 Anthranilate
+Ascorbate
 Asparagine
 Aspartate
+Azelaic acid
+Cadaverine
+Carnitine
 Citrulline
 CMP
 Cystine
+Cytidine
 D-Glyceraldehyde 3-phosphate
+D-Leucate
 F16BP/F26BP/G16BP
 G1P/G6P/F6P/F1P
 Gamma-Aminobutyrate
+Glucosamine
+Glutamic acid
 Glutamine
+Glyceraldehyde
+Glycerate
+Glycerol 3-phosphate
 GMP
 Hypoxanthine
 Inosine
+Inositol
 Isoleucine
 Isovalerate
+L-Kynurenine
 Lactate
 Lactose
 Leucine
 Linolenate
 Malondialdehyde
 Margaric acid
+Mevalonate
 Myristic acid
+N-Acetylglycine
+N-Acetylputrescine
 Nicotinate
 Orotate
 Oxaloacetate
 Oxidized glutathione
 Oxypurinol
+Pantothenate
+Phenylalanine
+Putrescine
 Pyroglutamate
 Reduced glutathione
 Ribose-5-phosphate
+Serine
+Succinate
+Taurine
+Trimethylamine
+Tryptamine
 Tryptophan
 Urate
 Valine
 Xanthine
 Xanthosine
+Xanthurenate

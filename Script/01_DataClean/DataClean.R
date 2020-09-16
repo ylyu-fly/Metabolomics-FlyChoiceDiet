@@ -197,6 +197,25 @@ head.data.cut <- head.data.cut[-match(c("1C13-Lactate", "213C-Tyrosine", "Epinep
 body.data.cut <- body.data.cut[-match(c("1C13-Lactate", "213C-Tyrosine", "Epinephrine/Normetanephrine"), 
                                       rownames(body.data.cut)), ]
 
+
+## Plot Some Random Metabolites
+head.index <- sample(1:nrow(head.data.cut), 10)
+body.index <- sample(1:nrow(body.data.cut), 10)
+
+par(mfrow = c(10, 4), mar = c(3, 3, 1, 0) + 0.5, mgp = c(1.5, 0.5, 0) + 0.2)
+for(i in 1:10) {
+    tmp.head.data <- head.data.cut[head.index[i],]
+    tmp.head.name <- rownames(head.data.cut)[head.index[i]]
+    tmp.body.data <- body.data.cut[body.index[i],]
+    tmp.body.name <- rownames(body.data.cut)[body.index[i]]
+    
+    hist(10^(tmp.head.data), breaks = 15, las = 1, main = tmp.head.name, xlab = "")
+    hist(tmp.head.data, breaks = 15, las = 1, main = tmp.head.name, xlab = "")
+    
+    hist(10^(tmp.body.data), breaks = 15, las = 1, main = tmp.body.name, xlab = "")
+    hist(tmp.body.data, breaks = 15, las = 1, main = tmp.body.name, xlab = "")
+}
+
 # Data Imputation ---------------------------------------------------------
 ## Impute using the KNN algorithm. (Uses 'impute' package in 'Bioconductor')
 head.data.imputed <- (impute.knn(head.data.cut))$data

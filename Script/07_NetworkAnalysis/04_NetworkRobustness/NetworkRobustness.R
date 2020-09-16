@@ -3,12 +3,13 @@
 ## Part: 7-4
 ## Author: Yang Lyu
 ## Date created: 10/01/2019
-## Date modified: 06/01/2020
+## Date modified: 08/19/2020
 
 # Environment Settings ----------------------------------------------------
 library(igraph)
 library(ggplot2)
 library(easyGgplot2)
+source("Script/07_NetworkAnalysis/01_NetworkConstruction/multiplot.R")
 
 # Data Input --------------------------------------------------------------
 ## Read data
@@ -58,29 +59,29 @@ for (i in 1:1000) {
 }
 
 delta.fail.head.wt.fd <- 
-  (average.path.length(head.wt.fd.gc) - fail.head.wt.fd) / 
+  (fail.head.wt.fd - average.path.length(head.wt.fd.gc)) / 
    average.path.length(head.wt.fd.gc) * 100
 delta.fail.head.wt.cd <- 
-  (average.path.length(head.wt.cd.gc) - fail.head.wt.cd) / 
+  (fail.head.wt.cd - average.path.length(head.wt.cd.gc)) / 
    average.path.length(head.wt.cd.gc) * 100
 delta.fail.head.ht.fd <- 
-  (average.path.length(head.ht.fd.gc) - fail.head.ht.fd) / 
+  (fail.head.ht.fd - average.path.length(head.ht.fd.gc)) / 
    average.path.length(head.ht.fd.gc) * 100
 delta.fail.head.ht.cd <- 
-  (average.path.length(head.ht.cd.gc) - fail.head.ht.cd) / 
+  (fail.head.ht.cd - average.path.length(head.ht.cd.gc)) / 
   average.path.length(head.ht.cd.gc) * 100
 
 delta.fail.body.wt.fd <- 
-  (average.path.length(body.wt.fd.gc) - fail.body.wt.fd) / 
+  (fail.body.wt.fd - average.path.length(body.wt.fd.gc)) / 
    average.path.length(body.wt.fd.gc) * 100
 delta.fail.body.wt.cd <- 
-  (average.path.length(body.wt.cd.gc) - fail.body.wt.cd) / 
+  (fail.body.wt.cd - average.path.length(body.wt.cd.gc)) / 
    average.path.length(body.wt.cd.gc) * 100
 delta.fail.body.ht.fd <- 
-  (average.path.length(body.ht.fd.gc) - fail.body.ht.fd)  / 
+  (fail.body.ht.fd - average.path.length(body.ht.fd.gc))  / 
    average.path.length(body.ht.fd.gc) * 100
 delta.fail.body.ht.cd <- 
-  (average.path.length(body.ht.cd.gc) - fail.body.ht.cd) / 
+  (fail.body.ht.cd - average.path.length(body.ht.cd.gc)) / 
    average.path.length(body.ht.cd.gc) * 100
 
 delta.fail.head.df <- 
@@ -146,7 +147,7 @@ p1 <- ggplot(delta.fail.head.sum,
   coord_cartesian(xlim = c(0, 20), ylim = c(-50, 50)) + 
   labs(title = "Network Fail in Head", 
        x = "# of Nodes Removed", 
-       y = expression(paste(Delta, " Connectivity (%)"))) + 
+       y = expression(paste(Delta, " Average Shortest Distance (%)"))) + 
   theme_classic() + 
   scale_color_manual(values = c('#555555','#5399FF'))
 
@@ -160,20 +161,9 @@ p2 <- ggplot(delta.fail.body.sum,
   coord_cartesian(xlim = c(0, 30), ylim = c(-50, 50)) + 
   labs(title = "Network Fail in Body", 
        x = "# of Nodes Removed", 
-       y = expression(paste(Delta, " Connectivity (%)"))) + 
+       y = expression(paste(Delta, " Average Shortest Distance (%)"))) + 
   theme_classic() + 
   scale_color_manual(values = c('#555555', '#5399FF'))
-
-## Loess Smoothing
-#ggplot(delta.fail.head.df, aes(x=remove, y=delta, color = group)) +
-#    geom_smooth(method="loess", se=T, span = 0.15, alpha = 0.3) + 
-#    coord_cartesian(ylim = c(-10, 30)) +
-#    theme_bw()
-
-#ggplot(delta.fail.body.df, aes(x=remove, y=delta, color = group)) +
-#    geom_smooth(method="loess", se=T, span = 0.15, alpha = 0.3) + 
-#    coord_cartesian(ylim = c(-10, 30)) +
-#    theme_bw()
 
 # Network Attack ----------------------------------------------------------
 ## Remove nodes
@@ -239,13 +229,13 @@ for (i in 1:20) {
     attack.degree.head.ht.cd.gc <- 
       delete_vertices(head.ht.cd.gc, head.ht.cd.degree.names[1:i])
     
-    attack.eigen.head.wt.fd.g <- 
+    attack.eigen.head.wt.fd.gc <- 
       delete_vertices(head.wt.fd.gc, head.wt.fd.eigen.names[1:i])
-    attack.eigen.head.wt.cd.g <- 
+    attack.eigen.head.wt.cd.gc <- 
       delete_vertices(head.wt.cd.gc, head.wt.cd.eigen.names[1:i])
-    attack.eigen.head.ht.fd.g <- 
+    attack.eigen.head.ht.fd.gc <- 
       delete_vertices(head.ht.fd.gc, head.ht.fd.eigen.names[1:i])
-    attack.eigen.head.ht.cd.g <- 
+    attack.eigen.head.ht.cd.gc <- 
       delete_vertices(head.ht.cd.gc, head.ht.cd.eigen.names[1:i])
     
     attack.degree.head.wt.fd[i] <- 
@@ -258,13 +248,13 @@ for (i in 1:20) {
       average.path.length(attack.degree.head.ht.cd.gc)
     
     attack.eigen.head.wt.fd[i] <- 
-      average.path.length(attack.eigen.head.wt.fd.g)
+      average.path.length(attack.eigen.head.wt.fd.gc)
     attack.eigen.head.wt.cd[i] <- 
-      average.path.length(attack.eigen.head.wt.cd.g)
+      average.path.length(attack.eigen.head.wt.cd.gc)
     attack.eigen.head.ht.fd[i] <- 
-      average.path.length(attack.eigen.head.ht.fd.g)
+      average.path.length(attack.eigen.head.ht.fd.gc)
     attack.eigen.head.ht.cd[i] <- 
-      average.path.length(attack.eigen.head.ht.cd.g)
+      average.path.length(attack.eigen.head.ht.cd.gc)
 }
 
 for (i in 1:30) {
@@ -307,42 +297,42 @@ for (i in 1:30) {
 
 attack.head.df <- 
   data.frame(remove = rep(1:20, 4),
-             degree = c((average.path.length(head.wt.fd.gc) - attack.degree.head.wt.fd) / 
+             degree = c((attack.degree.head.wt.fd - average.path.length(head.wt.fd.gc)) / 
                           average.path.length(head.wt.fd.gc) * 100, 
-                        (average.path.length(head.wt.cd.gc) - attack.degree.head.wt.cd) / 
+                        (attack.degree.head.wt.cd - average.path.length(head.wt.cd.gc)) / 
                           average.path.length(head.wt.cd.gc) * 100,
-                        (average.path.length(head.ht.fd.gc) - attack.degree.head.ht.fd) / 
+                        (attack.degree.head.ht.fd - average.path.length(head.ht.fd.gc)) / 
                           average.path.length(head.ht.fd.gc) * 100,
-                        (average.path.length(head.ht.cd.gc) - attack.degree.head.ht.cd) / 
+                        (attack.degree.head.ht.cd - average.path.length(head.ht.cd.gc)) / 
                           average.path.length(head.ht.cd.gc) * 100),
-              eigen = c((average.path.length(head.wt.fd.gc) - attack.eigen.head.wt.fd) / 
+              eigen = c((attack.eigen.head.wt.fd - average.path.length(head.wt.fd.gc)) / 
                           average.path.length(head.wt.fd.gc) * 100, 
-                        (average.path.length(head.wt.cd.gc) - attack.eigen.head.wt.cd) / 
+                        (attack.eigen.head.wt.cd - average.path.length(head.wt.cd.gc)) / 
                           average.path.length(head.wt.cd.gc) * 100,
-                        (average.path.length(head.ht.fd.gc) - attack.eigen.head.ht.fd) / 
+                        (attack.eigen.head.ht.fd - average.path.length(head.ht.fd.gc)) / 
                           average.path.length(head.ht.fd.gc) * 100,
-                        (average.path.length(head.ht.cd.gc) - attack.eigen.head.ht.cd) / 
+                        (attack.eigen.head.ht.cd - average.path.length(head.ht.cd.gc)) / 
                           average.path.length(head.ht.cd.gc) * 100),
               group = rep(c("w1118/FD", "w1118/CD", "5-HT2A/FD", "5-HT2A/CD"), 
                           each = 20))
 
 attack.body.df <- 
   data.frame(remove = rep(1:30, 4), 
-             degree = c((average.path.length(body.wt.fd.gc) - attack.degree.body.wt.fd) / 
+             degree = c((attack.degree.body.wt.fd - average.path.length(body.wt.fd.gc)) / 
                           average.path.length(body.wt.fd.gc) * 100, 
-                        (average.path.length(body.wt.cd.gc) - attack.degree.body.wt.cd) / 
+                        (attack.degree.body.wt.cd - average.path.length(body.wt.cd.gc)) / 
                           average.path.length(body.wt.cd.gc) * 100,
-                        (average.path.length(body.ht.fd.gc) - attack.degree.body.ht.fd) / 
+                        (attack.degree.body.ht.fd - average.path.length(body.ht.fd.gc)) / 
                           average.path.length(body.ht.fd.gc) * 100,
-                        (average.path.length(body.ht.cd.gc) - attack.degree.body.ht.cd) / 
+                        (attack.degree.body.ht.cd - average.path.length(body.ht.cd.gc)) / 
                           average.path.length(body.ht.cd.gc) * 100),
-              eigen = c((average.path.length(body.wt.fd.gc) - attack.eigen.body.wt.fd) / 
+              eigen = c((attack.eigen.body.wt.fd - average.path.length(body.wt.fd.gc)) / 
                           average.path.length(body.wt.fd.gc) * 100, 
-                        (average.path.length(body.wt.cd.gc) - attack.eigen.body.wt.cd) / 
+                        (attack.eigen.body.wt.cd - average.path.length(body.wt.cd.gc)) / 
                           average.path.length(body.wt.cd.gc) * 100,
-                        (average.path.length(body.ht.fd.gc) - attack.eigen.body.ht.fd) / 
+                        (attack.eigen.body.ht.fd - average.path.length(body.ht.fd.gc)) / 
                           average.path.length(body.ht.fd.gc) * 100,
-                        (average.path.length(body.ht.cd.gc) - attack.eigen.body.ht.cd) / 
+                        (attack.eigen.body.ht.cd - average.path.length(body.ht.cd.gc)) / 
                           average.path.length(body.ht.cd.gc) * 100),
               group = rep(c("w1118/FD", "w1118/CD", "5-HT2A/FD", "5-HT2A/CD"), 
                           each = 30))
@@ -366,10 +356,10 @@ p3 <- ggplot(attack.head.df,
                  shape = diet, linetype = diet, color = genotype)) + 
   geom_line() + 
   geom_point() + 
-  coord_cartesian(xlim = c(0, 20), ylim = c(-40, 0)) + 
+  coord_cartesian(xlim = c(0, 20), ylim = c(0, 50)) + 
   labs(title = "Network Attack by Degrees in Head", 
        x = "# of Nodes Removed", 
-       y = expression(paste(Delta, " Connectivity (%)"))) + 
+       y = expression(paste(Delta, " Avreage Shortest Distance (%)"))) + 
   theme_classic() + 
   scale_color_manual(values = c('#555555', '#5399FF'))
 
@@ -378,10 +368,10 @@ p4 <- ggplot(attack.body.df,
                  shape = diet, linetype = diet, color = genotype)) + 
   geom_line() +
   geom_point() +
-  coord_cartesian(xlim = c(0, 30), ylim = c(-40, 0)) +
+  coord_cartesian(xlim = c(0, 30), ylim = c(0, 50)) +
   labs(title = "Network Attack by Degrees in Body", 
        x = "# of Nodes Removed", 
-       y = expression(paste(Delta, " Connectivity (%)"))) +
+       y = expression(paste(Delta, " Average Shortest Distance (%)"))) +
   theme_classic() +
   scale_color_manual(values = c('#555555', '#5399FF'))
 
@@ -390,10 +380,10 @@ p5 <- ggplot(attack.head.df,
                  shape = diet, linetype = diet, color = genotype)) + 
   geom_line() + 
   geom_point() + 
-  coord_cartesian(xlim = c(0, 20), ylim = c(-40, 0)) + 
+  coord_cartesian(xlim = c(0, 20), ylim = c(0, 50)) + 
   labs(title = "Network Attack by Eigenvalues in Head", 
        x = "# of Nodes Removed", 
-       y = expression(paste(Delta, " Connectivity (%)"))) + 
+       y = expression(paste(Delta, " Average Shortest Distance (%)"))) + 
   theme_classic() + 
   scale_color_manual(values = c('#555555', '#5399FF'))
 
@@ -402,207 +392,23 @@ p6 <- ggplot(attack.body.df,
                  shape = diet, linetype = diet, color = genotype)) + 
   geom_line() + 
   geom_point() + 
-  coord_cartesian(xlim = c(0, 30), ylim = c(-40, 0)) + 
+  coord_cartesian(xlim = c(0, 30), ylim = c(0, 50)) + 
   labs(title = "Network Attack by Eigenvalues in Body",  
        x = "# of Nodes Removed", 
-       y = expression(paste(Delta, " Connectivity (%)"))) + 
+       y = expression(paste(Delta, " Average Shortest Distance (%)"))) + 
   theme_classic() + 
   scale_color_manual(values = c('#555555', '#5399FF'))
 
-head.wt.cd.degree.names[11]
-head.wt.cd.eigen.names[15]
-neighbors(head.wt.cd.gc, "Lactose")
+head.wt.cd.degree.names[1]  ### 5-Aminopentanoic acid
+head.wt.cd.degree.names[14] ### GMP
+head.wt.cd.degree.names[15] ### Isovalerate
+head.wt.cd.degree.names[16] ### Choline
 
-# Lactose Analysis --------------------------------------------------------
-## Delete lactose
-attack.degree.head.wt.cd.gc11 <- delete_vertices(head.wt.cd.gc, head.wt.cd.degree.names[11])
+head.wt.cd.eigen.names[4]   ### 5-Aminopentanoic acid
+head.wt.cd.eigen.names[9]   ### Carnitine
+head.wt.cd.eigen.names[15]  ### Choline
+head.wt.cd.eigen.names[16]  ### Glutarate
 
-(average.path.length(head.wt.cd.gc) - average.path.length(attack.degree.head.wt.cd.gc11)) / 
-  average.path.length(head.wt.cd.gc) * 100
-
-## Delete lactose first
-head.wt.fd.lactose1.names <- c("Lactose", head.wt.fd.degree.names[1:30][-4])
-head.wt.cd.lactose1.names <- c("Lactose", head.wt.cd.degree.names[1:30][-11])
-head.ht.fd.lactose1.names <- c("Lactose", head.ht.fd.degree.names[1:30][-25])
-head.ht.cd.lactose1.names <- c("Lactose", head.ht.cd.degree.names[1:29])
-
-## Do not delete lactose
-head.wt.fd.lactose2.names <- head.wt.fd.degree.names[1:31][-4]
-head.wt.cd.lactose2.names <- head.wt.cd.degree.names[1:31][-11]
-head.ht.fd.lactose2.names <- head.ht.fd.degree.names[1:31][-25]
-head.ht.cd.lactose2.names <- head.ht.cd.degree.names[1:30]
-
-attack.lactose1.head.wt.fd <- numeric()
-attack.lactose1.head.wt.cd <- numeric()
-attack.lactose1.head.ht.fd <- numeric()
-attack.lactose1.head.ht.cd <- numeric()
-
-attack.lactose2.head.wt.fd <- numeric()
-attack.lactose2.head.wt.cd <- numeric()
-attack.lactose2.head.ht.fd <- numeric()
-attack.lactose2.head.ht.cd <- numeric()
-
-for (i in 1:20) {
-  attack.lactose1.head.wt.fd.gc <- 
-    delete_vertices(head.wt.fd.gc, head.wt.fd.lactose1.names[1:i])
-  attack.lactose1.head.wt.cd.gc <- 
-    delete_vertices(head.wt.cd.gc, head.wt.cd.lactose1.names[1:i])
-  attack.lactose1.head.ht.fd.gc <- 
-    delete_vertices(head.ht.fd.gc, head.ht.fd.lactose1.names[1:i])
-  attack.lactose1.head.ht.cd.gc <- 
-    delete_vertices(head.ht.cd.gc, head.ht.cd.lactose1.names[1:i])
-  
-  attack.lactose2.head.wt.fd.gc <- 
-    delete_vertices(head.wt.fd.gc, head.wt.fd.lactose2.names[1:i])
-  attack.lactose2.head.wt.cd.gc <- 
-    delete_vertices(head.wt.cd.gc, head.wt.cd.lactose2.names[1:i])
-  attack.lactose2.head.ht.fd.gc <- 
-    delete_vertices(head.ht.fd.gc, head.ht.fd.lactose2.names[1:i])
-  attack.lactose2.head.ht.cd.gc <- 
-    delete_vertices(head.ht.cd.gc, head.ht.cd.lactose2.names[1:i])
-  
-  attack.lactose1.head.wt.fd[i] <- 
-    average.path.length(attack.lactose1.head.wt.fd.gc)
-  attack.lactose1.head.wt.cd[i] <- 
-    average.path.length(attack.lactose1.head.wt.cd.gc)
-  attack.lactose1.head.ht.fd[i] <- 
-    average.path.length(attack.lactose1.head.ht.fd.gc)
-  attack.lactose1.head.ht.cd[i] <- 
-    average.path.length(attack.lactose1.head.ht.cd.gc)
-  
-  attack.lactose2.head.wt.fd[i] <- 
-    average.path.length(attack.lactose2.head.wt.fd.gc)
-  attack.lactose2.head.wt.cd[i] <- 
-    average.path.length(attack.lactose2.head.wt.cd.gc)
-  attack.lactose2.head.ht.fd[i] <- 
-    average.path.length(attack.lactose2.head.ht.fd.gc)
-  attack.lactose2.head.ht.cd[i] <- 
-    average.path.length(attack.lactose2.head.ht.cd.gc)
-}
-
-attack.head.df$lactose1 <- 
-  c((average.path.length(head.wt.fd.gc) - attack.lactose1.head.wt.fd) / 
-      average.path.length(head.wt.fd.gc) * 100, 
-    (average.path.length(head.wt.cd.gc) - attack.lactose1.head.wt.cd) / 
-      average.path.length(head.wt.cd.gc) * 100,
-    (average.path.length(head.ht.fd.gc) - attack.lactose1.head.ht.fd) / 
-      average.path.length(head.ht.fd.gc) * 100,
-    (average.path.length(head.ht.cd.gc) - attack.lactose1.head.ht.cd) / 
-      average.path.length(head.ht.cd.gc) * 100)
-
-attack.head.df$lactose2 <- 
-  c((average.path.length(head.wt.fd.gc) - attack.lactose2.head.wt.fd) / 
-      average.path.length(head.wt.fd.gc) * 100, 
-    (average.path.length(head.wt.cd.gc) - attack.lactose2.head.wt.cd) / 
-      average.path.length(head.wt.cd.gc) * 100, 
-    (average.path.length(head.ht.fd.gc) - attack.lactose2.head.ht.fd) / 
-      average.path.length(head.ht.fd.gc) * 100, 
-    (average.path.length(head.ht.cd.gc) - attack.lactose2.head.ht.cd) / 
-      average.path.length(head.ht.cd.gc) * 100)
-
-p7 <- ggplot(attack.head.df, 
-             aes(x = remove, y = lactose1, group = group, 
-                 shape = diet, linetype = diet, color = genotype)) + 
-  geom_line() + 
-  geom_point() + 
-  coord_cartesian(xlim = c(0, 20), ylim = c(-40, 0)) + 
-  labs(title = "Lactose Removed First", 
-       x = "# of Nodes Removed", 
-       y = expression(paste(Delta, " Connectivity (%)"))) + 
-  theme_classic() + 
-  scale_color_manual(values = c('#555555', '#5399FF'))
-
-p8 <- ggplot(attack.head.df, 
-             aes(x = remove, y = lactose2, group = group, 
-                 shape = diet, linetype = diet, color = genotype)) + 
-  geom_line() + 
-  geom_point() + 
-  coord_cartesian(xlim = c(0, 20), ylim = c(-40, 0)) + 
-  labs(title = "Lactose Not Removed", 
-       x = "# of Nodes Removed", 
-       y = expression(paste(Delta, " Connectivity (%)"))) + 
-  theme_classic() +
-  scale_color_manual(values = c('#555555', '#5399FF'))
-
-ggplot2.multiplot(p1, p2, p3, p4, p7, p8, cols = 2)
-
-## Lactose neighbors 
-sub.head.wt.fd.gc <- 
-  induced_subgraph(head.wt.fd.gc, ego(head.wt.fd.gc, 3, "Lactose")[[1]])
-sub.head.wt.cd.gc <- 
-  induced_subgraph(head.wt.cd.gc, ego(head.wt.cd.gc, 3, "Lactose")[[1]])
-sub.head.ht.fd.gc <- 
-  induced_subgraph(head.ht.fd.gc, ego(head.ht.fd.gc, 3, "Lactose")[[1]])
-sub.head.ht.cd.gc <- 
-  induced_subgraph(head.ht.cd.gc, ego(head.ht.cd.gc, 3, "Lactose")[[1]])
-
-sub.del.head.wt.fd.gc <- delete_vertices(sub.head.wt.fd.gc, "Lactose")
-sub.del.head.wt.cd.gc <- delete_vertices(sub.head.wt.cd.gc, "Lactose")
-sub.del.head.ht.fd.gc <- delete_vertices(sub.head.ht.fd.gc, "Lactose")
-sub.del.head.ht.cd.gc <- delete_vertices(sub.head.ht.cd.gc, "Lactose")
-
-V(sub.head.wt.fd.gc)$color <- 
-  ifelse(V(sub.head.wt.fd.gc)$name == "Lactose", "green", "tomato")
-V(sub.head.wt.cd.gc)$color <- 
-  ifelse(V(sub.head.wt.cd.gc)$name == "Lactose", "green", "tomato")
-V(sub.head.ht.fd.gc)$color <- 
-  ifelse(V(sub.head.ht.fd.gc)$name == "Lactose", "green", "tomato")
-V(sub.head.ht.cd.gc)$color <- 
-  ifelse(V(sub.head.ht.cd.gc)$name == "Lactose", "green", "tomato")
-
-par(mfrow = c(2, 4), mar = c(2, 2, 2, 2))
-plot(sub.head.wt.fd.gc, main = "Head / w1118 / FD", 
-     layout = layout.fruchterman.reingold, 
-     vertex.color = V(sub.head.wt.fd.gc)$color, vertex.frame.color = "black", 
-     vertex.size = 15, vertex.label = NA, 
-     vertex.label.family = "Helvetica", vertex.label.cex = 0.5)
-
-plot(sub.del.head.wt.fd.gc, main = "Lactose Removal",
-     layout = layout.fruchterman.reingold, 
-     vertex.color = "tomato", vertex.frame.color = "black", 
-     vertex.size = 15, vertex.label = NA,
-     vertex.label.family = "Helvetica", vertex.label.cex = 0.5)
-
-plot(sub.head.wt.cd.gc, main = "Head / w1118 / CD", 
-     layout = layout.fruchterman.reingold, 
-     vertex.color = V(sub.head.wt.cd.gc)$color, vertex.frame.color = "black", 
-     vertex.size = 15, vertex.label = NA,
-     vertex.label.family = "Helvetica", vertex.label.cex = 0.5)
-
-plot(sub.del.head.wt.cd.gc, main = "Lactose Removal", 
-     layout = layout.fruchterman.reingold, 
-     vertex.color = "tomato", vertex.frame.color = "black", 
-     vertex.size = 15, vertex.label = NA,
-     vertex.label.family = "Helvetica", vertex.label.cex = 0.5)
-
-plot(sub.head.ht.fd.gc, main = "Head / 5-HT2A / FD", 
-     layout = layout.fruchterman.reingold, 
-     vertex.color = V(sub.head.ht.fd.gc)$color, vertex.frame.color = "black", 
-     vertex.size = 15, vertex.label = NA,
-     vertex.label.family = "Helvetica", vertex.label.cex = 0.5)
-
-plot(sub.del.head.ht.fd.gc, main = "Lactose Removal", 
-     layout = layout.fruchterman.reingold, 
-     vertex.color = "tomato", vertex.frame.color = "black", 
-     vertex.size = 15, vertex.label = NA,
-     vertex.label.family = "Helvetica", vertex.label.cex = 0.5)
-
-plot(sub.head.ht.cd.gc, main = "Head / 5-HT2A / CD", 
-     layout = layout.fruchterman.reingold, 
-     vertex.color = V(sub.head.ht.cd.gc)$color, vertex.frame.color = "black", 
-     vertex.size = 15, vertex.label = NA,
-     vertex.label.family = "Helvetica", vertex.label.cex = 0.5)
-
-plot(sub.del.head.ht.cd.gc, main = "Lactose Removal", 
-     layout = layout.fruchterman.reingold, 
-     vertex.color = "tomato", vertex.frame.color = "black", 
-     vertex.size = 15, vertex.label = NA,
-     vertex.label.family = "Helvetica", vertex.label.cex = 0.5)
-
-par(mfrow=c(1, 2), mar = c(1, 1, 1, 1) + 0.1, mgp = c(2, 0, 0) + 0.5)
-plot(head.wt.cd.gc, layout = layout.fruchterman.reingold, main = "Head / w1118 / CD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
-plot(attack.degree.head.wt.cd.gc11, layout = layout.fruchterman.reingold, main = "Head / w1118 / CD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+multiplot(p1, p2, p3, p4, p5, p6, 
+          layout = matrix(c(1, 2, 3, 4, 5, 6), 
+                          nrow = 3, byrow=TRUE))

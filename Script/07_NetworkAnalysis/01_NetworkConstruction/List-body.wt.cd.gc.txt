@@ -2,19 +2,25 @@
 2-Hydroxyglutarate
 2/3-Phosphoglycerate
 4-Hydroxybutyrate
+4-Hydroxyphenylpyruvate
+4-Pyridoxic acid
 5-Aminopentanoic acid
 8-Hydroxy-deoxyguanosine
 13-HODE
 Acetoacetate
 Acetylcarnitine
+Acetylcholine
+Aconitate
 Adenine
 Adenosine
 Adipic acid
 Agmatine
 Alanine
+Allantoin
 Alpha-Ketoglutarate
 AMP
 Anthranilate
+Arginine
 Ascorbate
 Asparagine
 Aspartate
@@ -25,24 +31,32 @@ Biotin
 Cadaverine
 Carnitine
 Choline
+Citraconate
+Citrulline
 CMP
+Cystathionine
 Cystine
 Cytidine
 Cytosine
 D-Glyceraldehyde 3-phosphate
 D-Leucate
+Deoxycarnitine
 Dimethylglycine
 F16BP/F26BP/G16BP
 Fructose
 Fumarate
 G1P/G6P/F6P/F1P
 Gamma-Aminobutyrate
+Geranyl-pyrophosphate
 Glucosamine
 Glucose
 Glucuronate
 Glutamic acid
 Glutamine
+Glutarate
+Glyceraldehyde
 Glycerate
+Glycerol 3-phosphate
 Glycine
 GMP
 Guanosine
@@ -51,8 +65,10 @@ Histidine
 Hydroxyproline/Aminolevulinate
 Hypoxanthine
 Inosine
+Inositol
 Isoleucine
 Isovalerate
+Kynurenate
 L-Kynurenine
 Lactate
 Lactose
@@ -67,6 +83,7 @@ Methionine
 Mevalonate
 Myristic acid
 N-Acetylglycine
+Niacinamide
 Nicotinate
 Ornithine
 Orotate
@@ -84,16 +101,21 @@ Pyruvate
 Quinolinate
 Reduced glutathione
 Ribose-5-phosphate
+Sarcosine
 Serine
 Sorbitol
 Succinate
+Sucrose
 Taurine
 Threonine
+Trimethylamine
 Tryptamine
 Tryptophan
 Tyrosine
 UDP
+Uracil
 Urate
+Uridine
 Valine
 Xanthine
 Xanthosine

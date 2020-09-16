@@ -1,7 +1,5 @@
 2-Hydroxyglutarate
 5-Aminopentanoic acid
-Acetoacetate
-Acetylcholine
 Aconitate
 Adipic acid
 ADP
@@ -10,7 +8,6 @@ Asparagine
 Biotin
 Citrulline
 Cytidine
-Dimethylglycine
 G1P/G6P/F6P/F1P
 Gamma-Aminobutyrate
 Glucosamine
@@ -20,6 +17,7 @@ Glutamine
 Glutarate
 Glyceraldehyde
 Glycerol 3-phosphate
+GMP
 Hypoxanthine
 IMP
 Inosine
@@ -36,7 +34,8 @@ Margaric acid
 Methionine
 Oxaloacetate
 Oxidized glutathione
-Pyruvate
+Pantothenate
+Phenylalanine
 Uracil
 Urate
 Uridine
