@@ -709,72 +709,77 @@ ecount(body.ht.fd.g.fdr5)
 ecount(body.ht.cd.g.fdr5)
 
 # Network Visualization ---------------------------------------------------
+
+V(head.wt.fd.g.fdr10)$label <- NA
+V(head.wt.cd.g.fdr10)$label <- NA
+V(head.ht.fd.g.fdr10)$label <- NA
+V(head.ht.cd.g.fdr10)$label <- NA
+
+V(body.wt.fd.g.fdr10)$label <- NA
+V(body.wt.cd.g.fdr10)$label <- NA
+V(body.ht.fd.g.fdr10)$label <- NA
+V(body.ht.cd.g.fdr10)$label <- NA
+
+V(head.wt.fd.g.fdr5)$label <- NA
+V(head.wt.cd.g.fdr5)$label <- NA
+V(head.ht.fd.g.fdr5)$label <- NA
+V(head.ht.cd.g.fdr5)$label <- NA
+
+V(body.wt.fd.g.fdr5)$label <- NA
+V(body.wt.cd.g.fdr5)$label <- NA
+V(body.ht.fd.g.fdr5)$label <- NA
+V(body.ht.cd.g.fdr5)$label <- NA
+
 par(mfrow=c(4, 4), mar = c(1, 1, 2.5, 1) + 0.1, mgp = c(2, 0, 0) + 0.5)
 ## FDR = 0.10
 plot(head.wt.fd.g.fdr10, layout = layout.fruchterman.reingold, main = "Heads / w1118 / FD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(head.wt.cd.g.fdr10, layout = layout.fruchterman.reingold, main = "Heads / w1118 / CD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(head.ht.fd.g.fdr10, layout = layout.fruchterman.reingold, main = "Heads / 5-HT2A / FD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(head.ht.cd.g.fdr10, layout = layout.fruchterman.reingold, main = "Heads / 5-HT2A / CD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.wt.fd.g.fdr10, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / FD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.wt.cd.g.fdr10, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / CD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.ht.fd.g.fdr10, layout = layout.fruchterman.reingold, main = "Bodies / 5-HT2A / FD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.ht.cd.g.fdr10, layout = layout.fruchterman.reingold, main = "Bodies / 5-HT2A / CD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 ## FDR = 0.05
 plot(head.wt.fd.g.fdr5, layout = layout.fruchterman.reingold, main = "Heads / w1118 / FD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(head.wt.cd.g.fdr5, layout = layout.fruchterman.reingold, main = "Heads / w1118 / CD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(head.ht.fd.g.fdr5, layout = layout.fruchterman.reingold, main = "Heads / 5-HT2A / FD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(head.ht.cd.g.fdr5, layout = layout.fruchterman.reingold, main = "Heads / 5-HT2A / CD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.wt.fd.g.fdr5, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / FD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.wt.cd.g.fdr5, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / CD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.ht.fd.g.fdr5, layout = layout.fruchterman.reingold, main = "Bodies / 5-HT2A / FD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.ht.cd.g.fdr5, layout = layout.fruchterman.reingold, main = "Bodies / 5-HT2A / CD",
-     vertex.color = "tomato", vertex.frame.color = "tomato", vertex.size = 15, 
-     vertex.label.family = "Helvetica", vertex.color = "grey27", vertex.label.cex = 0.5)
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 ### Will use FDR = 0.1 as the cut-off
 head.wt.fd.g <- head.wt.fd.g.fdr10
