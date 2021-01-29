@@ -3,7 +3,7 @@
 ## Part: 5
 ## Author: Yang Lyu
 ## Date created: 01/25/2018
-## Date modified: 05/31/2020
+## Date modified: 12/07/2020
 ## May require R 4.0
 
 # Environment Settings ----------------------------------------------------
@@ -175,7 +175,7 @@ colnames(body.names.genotype) <- "MetaboliteID"
 colnames(head.names.dxg) <- "MetaboliteID"
 colnames(body.names.dxg) <- "MetaboliteID"
 
-## I fixed a few metabolite names with hands. So intead of regenerating the hits just please use the files in the folder.
+## I fixed a few metabolite names with hands. So instead of regenerating the hits just please use the files in the folder.
 
 #write.table(head.names.diet, "Data/ProcessedData/Hits-Metabolite_diet_head.txt", sep = "\t", quote = F, row.names = F, col.names = F)
 #write.table(body.names.diet, "Data/ProcessedData/Hits-Metabolite_diet_body.txt", sep = "\t", quote = F, row.names = F, col.names = F)
@@ -185,6 +185,9 @@ colnames(body.names.dxg) <- "MetaboliteID"
 
 #write.table(head.names.dxg, "Data/ProcessedData/Hits-Metabolite_dxg_head.txt", sep = "\t", quote = F, row.names = F, col.names = F)
 #write.table(body.names.dxg, "Data/ProcessedData/Hits-Metabolite_dxg_body.txt", sep = "\t", quote = F, row.names = F, col.names = F)
+
+write.table(head.linear.pvals[,c(1, 3, 5)], "Data/ProcessedData/Pvals-Metabolite_head.txt", sep = "\t", quote = F, row.names = T, col.names = T)
+write.table(body.linear.pvals[,c(1, 3, 5)], "Data/ProcessedData/Pvals-Metabolite_body.txt", sep = "\t", quote = F, row.names = T, col.names = T)
 
 save(head.names, body.names,
      head.names.diet, head.names.genotype, head.names.dxg, 

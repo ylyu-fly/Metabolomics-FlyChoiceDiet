@@ -48,6 +48,15 @@ body.group <- as.factor(body.data.tr$group)
 head.pca <- prcomp(as.matrix(head.data.tr[ , -ncol(head.data.tr)]), center = T, scale. = F)
 body.pca <- prcomp(as.matrix(body.data.tr[ , -ncol(body.data.tr)]), center = T, scale. = F)
 
+head.pc.var <- summary(head.pca)$importance[2,]
+body.pc.var <- summary(body.pca)$importance[2,]
+
+barplot(height = head.pc.var, names.arg = names(head.pc.var), 
+        ylim = c(0, 0.6), cex.names = 0.5, las = 2, xlab = "PC", ylab = "Proportion of Variance")
+
+barplot(height = body.pc.var, names.arg = names(body.pc.var), 
+        ylim = c(0, 0.6), cex.names = 0.5, las = 2, xlab = "PC", ylab = "Proportion of Variance")
+
 p1 <- ggbiplot(head.pca, obs.scale = 1, var.scale = 1, groups = head.group, ellipse = TRUE, choices = c(2, 3), alpha = 0, var.axes = F) +
     theme(legend.direction = 'vertical', legend.position = "right") + 
     scale_color_manual(values = c("black", "black", "black", "black", "black", "black", "black", "black")) +
@@ -78,3 +87,55 @@ grid.arrange(grobs = lapply(
     width = unit(2.5, "in"),
     height = unit(2, "in")
 ))
+
+# PCA matrix
+df <- data.frame()
+p0 <- ggplot(df) + 
+  geom_point() + xlim(0, 10) + ylim(0, 100) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+# Heads
+Q <- list()
+for(i in 1:5) {
+  for(j in (i+1):6) {
+    Q[[length(Q) + 1]] <- 
+      ggbiplot(head.pca, obs.scale = 1, var.scale = 1, groups = head.group, ellipse = TRUE, choices = c(i, j), alpha = 0, var.axes = F) +
+      theme(legend.direction = 'vertical', legend.position = "right") + 
+      scale_color_manual(values = c("black", "black", "black", "black", "black", "black", "black", "black")) +
+      scale_fill_manual(values = c("black", "grey70", "orange", "gold", "royalblue", "skyblue", "red", "pink")) + 
+      geom_point(size = 3, shape = 21, aes(fill = groups, color = groups)) +
+      theme_minimal() +
+      theme(legend.position = "none")
+  }
+}
+
+grid.arrange(p0, Q[[1]], Q[[2]], Q[[3]], Q[[4]],  Q[[5]], 
+             p0, p0,     Q[[6]], Q[[7]], Q[[8]],  Q[[9]], 
+             p0, p0,     p0,     Q[[10]],Q[[11]], Q[[12]],
+             p0, p0,     p0,     p0,     Q[[13]], Q[[14]],
+             p0, p0,     p0,     p0,     p0,      Q[[15]], 
+             ncol = 6)
+
+# Bodies
+Q <- list()
+for(i in 1:5) {
+  for(j in (i+1):6) {
+    Q[[length(Q) + 1]] <- 
+      ggbiplot(body.pca, obs.scale = 1, var.scale = 1, groups = body.group, ellipse = TRUE, choices = c(i, j), alpha = 0, var.axes = F) +
+      theme(legend.direction = 'vertical', legend.position = "right") + 
+      scale_color_manual(values = c("black", "black", "black", "black", "black", "black", "black", "black")) +
+      scale_fill_manual(values = c("black", "grey70", "orange", "gold", "royalblue", "skyblue", "red", "pink")) + 
+      geom_point(size = 3, shape = 21, aes(fill = groups, color = groups)) +
+      theme_minimal() +
+      theme(legend.position = "none")
+  }
+}
+
+grid.arrange(p0, Q[[1]], Q[[2]], Q[[3]], Q[[4]],  Q[[5]], 
+             p0, p0,     Q[[6]], Q[[7]], Q[[8]],  Q[[9]], 
+             p0, p0,     p0,     Q[[10]],Q[[11]], Q[[12]],
+             p0, p0,     p0,     p0,     Q[[13]], Q[[14]],
+             p0, p0,     p0,     p0,     p0,      Q[[15]], 
+             ncol = 6)
+

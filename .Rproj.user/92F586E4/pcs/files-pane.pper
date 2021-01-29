@@ -1,9 +1,9 @@
 {
-    "path" : "~/Research/Data/Metabolomics/Metabolomics-FlyChoiceDiet/Script/06_Enrichment",
-    "sortOrder" : [
+    "path": "~/Research/Data/Metabolomics/Metabolomics-FlyChoiceDiet/Script/07_NetworkAnalysis/01_NetworkConstruction",
+    "sortOrder": [
         {
-            "ascending" : true,
-            "columnIndex" : 2
+            "columnIndex": 2,
+            "ascending": true
         }
     ]
 }
