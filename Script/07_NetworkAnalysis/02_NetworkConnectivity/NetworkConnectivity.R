@@ -348,8 +348,8 @@ segments(1.7, head.ht.edge.delta,
 1-sum(head.wt.edge.delta <= perm.head.wt.edge.delta)/10000
 1-sum(head.ht.edge.delta <= perm.head.ht.edge.delta)/10000
 
-text (1, 1400, "P=0.0053", col = "red")
-text (2, 1400, "P=0.5308")
+text (1, 1400, "P=0.0011", col = "red")
+text (2, 1400, "P=0.1547")
 
 plot(jitter(rep(1:2, each = 10000)), 
      c(perm.body.wt.edge.delta, perm.body.ht.edge.delta),
@@ -381,8 +381,8 @@ segments(1.7, body.ht.edge.delta,
 1-sum(body.wt.edge.delta <= perm.body.wt.edge.delta)/10000
 1-sum(body.ht.edge.delta <= perm.body.ht.edge.delta)/10000
 
-text (1, 2700, "P=0.0897")
-text (2, 2700, "P=0.2053")
+text (1, 2700, "P=0.1025")
+text (2, 2700, "P=0.2758")
 
 # Connectivity Analysis ---------------------------------------------------
 head.wt.fd.gc.degree <- as.numeric(names(table(degree(head.wt.fd.gc))))

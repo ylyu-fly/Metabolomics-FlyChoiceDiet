@@ -3,7 +3,7 @@
 ## Part: 7-1
 ## Author: Yang Lyu
 ## Date created: 09/29/2019
-## Date modified: 09/01/2020
+## Date modified: 02/13/2021
 
 # Environment Settings ----------------------------------------------------
 library(Hmisc)
@@ -210,10 +210,15 @@ head.wt.cor.df <- data.frame(Cor = c(head.wt.fd.cor.lwr[lower.tri(head.wt.fd.cor
                              Diet = factor(rep(c("FD", "CD"), 
                                                each = length(head.wt.fd.cor.lwr[lower.tri(head.wt.fd.cor.lwr)]))))
 
-head.wt.tr.cor.df <- data.frame(Cor = c(head.wt.fd2cd.cor.lwr[lower.tri(head.wt.fd2cd.cor.lwr)],
-                                        head.wt.cd2fd.cor.lwr[lower.tri(head.wt.cd2fd.cor.lwr)]), 
-                                Diet = factor(rep(c("FD2CD", "CD2FD"), 
+head.wt.tr1.cor.df <- data.frame(Cor = c(head.wt.fd2cd.cor.lwr[lower.tri(head.wt.fd2cd.cor.lwr)],
+                                         head.wt.cd.cor.lwr[lower.tri(head.wt.cd.cor.lwr)]), 
+                                 Diet = factor(rep(c("FD2CD", "CD"), 
                                                   each = length(head.wt.fd2cd.cor.lwr[lower.tri(head.wt.fd2cd.cor.lwr)]))))
+
+head.wt.tr2.cor.df <- data.frame(Cor = c(head.wt.cd2fd.cor.lwr[lower.tri(head.wt.cd2fd.cor.lwr)],
+                                         head.wt.fd.cor.lwr[lower.tri(head.wt.fd.cor.lwr)]), 
+                                 Diet = factor(rep(c("CD2FD", "FD"), 
+                                                   each = length(head.wt.cd2fd.cor.lwr[lower.tri(head.wt.cd2fd.cor.lwr)]))))
 
 head.ht.cor.df <- data.frame(Cor = c(head.ht.fd.cor.lwr[lower.tri(head.ht.fd.cor.lwr)],
                                      head.ht.cd.cor.lwr[lower.tri(head.ht.cd.cor.lwr)]), 
@@ -225,10 +230,15 @@ body.wt.cor.df <- data.frame(Cor = c(body.wt.fd.cor.lwr[lower.tri(body.wt.fd.cor
                              Diet = factor(rep(c("FD", "CD"), 
                                                each = length(body.wt.fd.cor.lwr[lower.tri(body.wt.fd.cor.lwr)]))))
 
-body.wt.tr.cor.df <- data.frame(Cor = c(body.wt.fd2cd.cor.lwr[lower.tri(body.wt.fd2cd.cor.lwr)],
-                                        body.wt.cd2fd.cor.lwr[lower.tri(body.wt.cd2fd.cor.lwr)]), 
-                                Diet = factor(rep(c("FD2CD", "CD2FD"), 
-                                                  each = length(body.wt.fd2cd.cor.lwr[lower.tri(body.wt.fd2cd.cor.lwr)]))))
+body.wt.tr1.cor.df <- data.frame(Cor = c(body.wt.fd2cd.cor.lwr[lower.tri(body.wt.fd2cd.cor.lwr)],
+                                         body.wt.cd.cor.lwr[lower.tri(body.wt.cd.cor.lwr)]), 
+                                 Diet = factor(rep(c("FD2CD", "CD"), 
+                                                   each = length(body.wt.fd2cd.cor.lwr[lower.tri(body.wt.fd2cd.cor.lwr)]))))
+
+body.wt.tr2.cor.df <- data.frame(Cor = c(body.wt.cd2fd.cor.lwr[lower.tri(body.wt.cd2fd.cor.lwr)],
+                                         body.wt.fd.cor.lwr[lower.tri(body.wt.fd.cor.lwr)]), 
+                                 Diet = factor(rep(c("CD2FD", "FD"), 
+                                                   each = length(body.wt.cd2fd.cor.lwr[lower.tri(body.wt.cd2fd.cor.lwr)]))))
 
 body.ht.cor.df <- data.frame(Cor = c(body.ht.fd.cor.lwr[lower.tri(body.ht.fd.cor.lwr)],
                                      body.ht.cd.cor.lwr[lower.tri(body.ht.cd.cor.lwr)]), 
@@ -236,100 +246,144 @@ body.ht.cor.df <- data.frame(Cor = c(body.ht.fd.cor.lwr[lower.tri(body.ht.fd.cor
                                                each = length(body.ht.fd.cor.lwr[lower.tri(body.ht.fd.cor.lwr)]))))
 
 ## Plot the distribution of correlation coefficient
-cor.p1 <- ggplot(head.wt.cor.df, aes(x = Cor, color = Diet, fill = Diet)) +
-   geom_histogram(position = "identity", alpha = 0.3, binwidth = 0.11) +
+cor.p1 <- ggplot2.histogram(data=head.wt.cor.df, xName='Cor', groupName='Diet', legendPosition="top", 
+                            groupColors=c('deepskyblue', 'gray50'), bins = 10) +
    scale_color_manual(values = c("black", "black", "black")) +
-   scale_fill_manual(values = c("red", "blue", "white")) +
    labs(title = "Head/w1118",x = "Correlation Coefficient", y = "Count") +
-   theme_classic()
+   coord_cartesian(xlim = c(-1, 1), ylim = c(0, 800)) 
 
-cor.p2 <- ggplot(head.wt.tr.cor.df, aes(x = Cor, color = Diet, fill = Diet)) +
-   geom_histogram(position = "identity", alpha = 0.3, binwidth = 0.11) +
+
+cor.p2 <- ggplot2.histogram(data=head.wt.tr1.cor.df, xName='Cor', groupName='Diet', legendPosition="top", 
+                            groupColors=c('deepskyblue', 'gray50'), bins = 10) +
    scale_color_manual(values = c("black", "black", "black")) +
-   scale_fill_manual(values = c("red", "blue", "white")) +
-   labs(title = "Head/w1118", x = "Correlation Coefficient", y = "Count") +
-   theme_classic()
+   labs(title = "Head/w1118",x = "Correlation Coefficient", y = "Count") +
+   coord_cartesian(xlim = c(-1, 1), ylim = c(0, 800))
 
-cor.p3 <- ggplot(head.ht.cor.df, aes(x = Cor, color = Diet, fill = Diet)) +
-   geom_histogram(position = "identity", alpha = 0.3, binwidth = 0.11) +
+cor.p3 <- ggplot2.histogram(data=head.wt.tr2.cor.df, xName='Cor', groupName='Diet', legendPosition="top", 
+                            groupColors=c('deepskyblue', 'gray50'), bins = 10) +
    scale_color_manual(values = c("black", "black", "black")) +
-   scale_fill_manual(values = c("red", "blue", "white")) +
-   labs(title="Head/5-HT2A",x = "Correlation Coefficient", y = "Count") +
-   theme_classic()
+   labs(title = "Head/w1118",x = "Correlation Coefficient", y = "Count") +
+   coord_cartesian(xlim = c(-1, 1), ylim = c(0, 800))
 
-cor.p4 <- ggplot(body.wt.cor.df, aes(x = Cor, color = Diet, fill = Diet)) +
-   geom_histogram(position = "identity", alpha = 0.3, binwidth = 0.11) +
+cor.p4 <- ggplot2.histogram(data=head.ht.cor.df, xName='Cor', groupName='Diet', legendPosition="top", 
+                            groupColors=c('deepskyblue', 'gray50'), bins = 10) +
    scale_color_manual(values = c("black", "black", "black")) +
-   scale_fill_manual(values = c("red", "blue", "white")) +
-   labs(title="Body/w1118", x = "Correlation Coefficient", y = "Count") +
-   theme_classic()
+   labs(title = "Head/5-HT2A",x = "Correlation Coefficient", y = "Count") +
+   coord_cartesian(xlim = c(-1, 1), ylim = c(0, 800))
 
-cor.p5 <- ggplot(body.wt.tr.cor.df, aes(x = Cor, color = Diet, fill = Diet)) +
-   geom_histogram(position = "identity", alpha = 0.3, binwidth = 0.11) +
+cor.p5 <- ggplot2.histogram(data=body.wt.cor.df, xName='Cor', groupName='Diet', legendPosition="top", 
+                            groupColors=c('deepskyblue', 'gray50'), bins = 10) +
    scale_color_manual(values = c("black", "black", "black")) +
-   scale_fill_manual(values = c("red", "blue", "white")) +
-   labs(title = "Body/w1118", x = "Correlation Coefficient", y = "Count") +
-   theme_classic()
+   labs(title = "Body/w1118",x = "Correlation Coefficient", y = "Count") +
+   coord_cartesian(xlim = c(-1, 1), ylim = c(0, 1200))
 
-cor.p6 <- ggplot(body.ht.cor.df, aes(x = Cor, color = Diet, fill = Diet)) +
-   geom_histogram(position = "identity", alpha = 0.3, binwidth = 0.11) +
+cor.p6 <- ggplot2.histogram(data=body.wt.tr1.cor.df, xName='Cor', groupName='Diet', legendPosition="top", 
+                            groupColors=c('deepskyblue', 'gray50'), bins = 10) +
    scale_color_manual(values = c("black", "black", "black")) +
-   scale_fill_manual(values = c("red", "blue", "white")) +
-   labs(title = "Body/5-HT2A", x = "Correlation Coefficient", y = "Count") +
-   theme_classic()
+   labs(title = "Body/w1118",x = "Correlation Coefficient", y = "Count") +
+   coord_cartesian(xlim = c(-1, 1), ylim = c(0, 1200))
 
-multiplot(cor.p1, cor.p4, cor.p2, cor.p5, cor.p3, cor.p6, cols=3)
+cor.p7 <- ggplot2.histogram(data=body.wt.tr2.cor.df, xName='Cor', groupName='Diet', legendPosition="top", 
+                            groupColors=c('deepskyblue', 'gray50'), bins = 10) +
+   scale_color_manual(values = c("black", "black", "black")) +
+   labs(title = "Body/w1118",x = "Correlation Coefficient", y = "Count") +
+   coord_cartesian(xlim = c(-1, 1), ylim = c(0, 1200))
 
-head.wt.cor.df$Type     <- "Weakly or not correlated"
-head.wt.tr.cor.df$Type  <- "Weakly or not correlated"
-head.ht.cor.df$Type     <- "Weakly or not correlated"
+cor.p8 <- ggplot2.histogram(data=body.ht.cor.df, xName='Cor', groupName='Diet', legendPosition="top", 
+                            groupColors=c('deepskyblue', 'gray50'), bins = 10) +
+   scale_color_manual(values = c("black", "black", "black")) +
+   labs(title = "Body/5-HT2A",x = "Correlation Coefficient", y = "Count") +
+   coord_cartesian(xlim = c(-1, 1), ylim = c(0, 1200))
 
-head.wt.cor.df[abs(head.wt.cor.df$Cor) >= 0.8, ]$Type <- "Strongly correlated"
-head.wt.tr.cor.df[abs(head.wt.tr.cor.df$Cor) >= 0.8, ]$Type <- "Strongly correlated"
-head.ht.cor.df[abs(head.ht.cor.df$Cor) >= 0.8, ]$Type <- "Strongly correlated"
+multiplot(cor.p1, cor.p5, cor.p2, cor.p6, cor.p3, cor.p7, cor.p4, cor.p8, cols=4)
+
+head.wt.cor.df$Type      <- "Weakly or not correlated"
+head.wt.tr1.cor.df$Type  <- "Weakly or not correlated"
+head.wt.tr2.cor.df$Type  <- "Weakly or not correlated"
+head.ht.cor.df$Type      <- "Weakly or not correlated"
+
+body.wt.cor.df$Type      <- "Weakly or not correlated"
+body.wt.tr1.cor.df$Type  <- "Weakly or not correlated"
+body.wt.tr2.cor.df$Type  <- "Weakly or not correlated"
+body.ht.cor.df$Type      <- "Weakly or not correlated"
+
+head.wt.cor.df[abs(head.wt.cor.df$Cor) >= 0.8, ]$Type         <- "Strongly correlated"
+head.wt.tr1.cor.df[abs(head.wt.tr1.cor.df$Cor) >= 0.8, ]$Type <- "Strongly correlated"
+head.wt.tr2.cor.df[abs(head.wt.tr2.cor.df$Cor) >= 0.8, ]$Type <- "Strongly correlated"
+head.ht.cor.df[abs(head.ht.cor.df$Cor) >= 0.8, ]$Type         <- "Strongly correlated"
+
+body.wt.cor.df[abs(body.wt.cor.df$Cor) >= 0.8, ]$Type         <- "Strongly correlated"
+body.wt.tr1.cor.df[abs(body.wt.tr1.cor.df$Cor) >= 0.8, ]$Type <- "Strongly correlated"
+body.wt.tr2.cor.df[abs(body.wt.tr2.cor.df$Cor) >= 0.8, ]$Type <- "Strongly correlated"
+body.ht.cor.df[abs(body.ht.cor.df$Cor) >= 0.8, ]$Type         <- "Strongly correlated"
 
 head.wt.type.df <-merge(melt(table(head.wt.cor.df[head.wt.cor.df$Diet == "FD", ]$Type)),
                         melt(table(head.wt.cor.df[head.wt.cor.df$Diet == "CD", ]$Type)), by = "Var1", all = T)
-head.wt.tr.type.df <-merge(melt(table(head.wt.tr.cor.df[head.wt.tr.cor.df$Diet == "FD2CD", ]$Type)),
-                           melt(table(head.wt.tr.cor.df[head.wt.tr.cor.df$Diet == "CD2FD", ]$Type)), by = "Var1", all = T)
+head.wt.tr1.type.df <-merge(melt(table(head.wt.tr1.cor.df[head.wt.tr1.cor.df$Diet == "FD2CD", ]$Type)),
+                           melt(table(head.wt.tr1.cor.df[head.wt.tr1.cor.df$Diet == "CD", ]$Type)), by = "Var1", all = T)
+head.wt.tr2.type.df <-merge(melt(table(head.wt.tr2.cor.df[head.wt.tr2.cor.df$Diet == "CD2FD", ]$Type)),
+                           melt(table(head.wt.tr2.cor.df[head.wt.tr2.cor.df$Diet == "FD", ]$Type)), by = "Var1", all = T)
 head.ht.type.df <-merge(melt(table(head.ht.cor.df[head.ht.cor.df$Diet == "FD", ]$Type)),
                         melt(table(head.ht.cor.df[head.ht.cor.df$Diet == "CD", ]$Type)), by = "Var1", all = T)
 
+body.wt.type.df <-merge(melt(table(body.wt.cor.df[body.wt.cor.df$Diet == "FD", ]$Type)),
+                        melt(table(body.wt.cor.df[body.wt.cor.df$Diet == "CD", ]$Type)), by = "Var1", all = T)
+body.wt.tr1.type.df <-merge(melt(table(body.wt.tr1.cor.df[body.wt.tr1.cor.df$Diet == "FD2CD", ]$Type)),
+                            melt(table(body.wt.tr1.cor.df[body.wt.tr1.cor.df$Diet == "CD", ]$Type)), by = "Var1", all = T)
+body.wt.tr2.type.df <-merge(melt(table(body.wt.tr2.cor.df[body.wt.tr2.cor.df$Diet == "CD2FD", ]$Type)),
+                            melt(table(body.wt.tr2.cor.df[body.wt.tr2.cor.df$Diet == "FD", ]$Type)), by = "Var1", all = T)
+body.ht.type.df <-merge(melt(table(body.ht.cor.df[body.ht.cor.df$Diet == "FD", ]$Type)),
+                        melt(table(body.ht.cor.df[body.ht.cor.df$Diet == "CD", ]$Type)), by = "Var1", all = T)
+
 colnames(head.wt.type.df) <- c("Type", "FD", "CD")
-colnames(head.wt.tr.type.df) <- c("Type", "FD2CD", "CD2FD")
+colnames(head.wt.tr1.type.df) <- c("Type", "FD2CD", "CD")
+colnames(head.wt.tr2.type.df) <- c("Type", "CD2FD", "FD")
 colnames(head.ht.type.df) <- c("Type", "FD", "CD")
 
+colnames(body.wt.type.df) <- c("Type", "FD", "CD")
+colnames(body.wt.tr1.type.df) <- c("Type", "FD2CD", "CD")
+colnames(body.wt.tr2.type.df) <- c("Type", "CD2FD", "FD")
+colnames(body.ht.type.df) <- c("Type", "FD", "CD")
+
 head.wt.type.df <- melt(head.wt.type.df, id = c("Type"))
-head.wt.tr.type.df <- melt(head.wt.tr.type.df, id = c("Type"))
+head.wt.tr1.type.df <- melt(head.wt.tr1.type.df, id = c("Type"))
+head.wt.tr2.type.df <- melt(head.wt.tr2.type.df, id = c("Type"))
 head.ht.type.df <- melt(head.ht.type.df, id = c("Type"))
 
+body.wt.type.df <- melt(body.wt.type.df, id = c("Type"))
+body.wt.tr1.type.df <- melt(body.wt.tr1.type.df, id = c("Type"))
+body.wt.tr2.type.df <- melt(body.wt.tr2.type.df, id = c("Type"))
+body.ht.type.df <- melt(body.ht.type.df, id = c("Type"))
+
 colnames(head.wt.type.df) <- c("Type", "Diet", "Count")
-colnames(head.wt.tr.type.df) <- c("Type", "Diet", "Count")
+colnames(head.wt.tr1.type.df) <- c("Type", "Diet", "Count")
+colnames(head.wt.tr2.type.df) <- c("Type", "Diet", "Count")
 colnames(head.ht.type.df) <- c("Type", "Diet", "Count")
 
+colnames(body.wt.type.df) <- c("Type", "Diet", "Count")
+colnames(body.wt.tr1.type.df) <- c("Type", "Diet", "Count")
+colnames(body.wt.tr2.type.df) <- c("Type", "Diet", "Count")
+colnames(body.ht.type.df) <- c("Type", "Diet", "Count")
+
+head.wt.type.df
+head.wt.tr1.type.df
+head.wt.tr2.type.df
+head.ht.type.df
+
+body.wt.type.df
+body.wt.tr1.type.df
+body.wt.tr2.type.df
+body.ht.type.df
+
 fisher.test(matrix(c(732, 4521, 402, 4851), nrow = 2)) # p < 2.2e-16
-fisher.test(matrix(c(514, 4739, 519, 4734), nrow = 2)) # p = 0.8957
+fisher.test(matrix(c(514, 4739, 402, 4851), nrow = 2)) # p = 0.0001217
+fisher.test(matrix(c(519, 4734, 732, 4521), nrow = 2)) # p = 1.56e-10
 fisher.test(matrix(c(802, 4451, 604, 4649), nrow = 2)) # p = 1.577e-08
 
-cor.p7 <- ggplot(data = head.wt.type.df, aes(x = Type, y = Count, fill = Diet)) +
-   geom_bar(stat = "identity", color = "black", position = "dodge", width = 0.4, alpha = 0.3) +
-   theme_minimal() + 
-   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1.0)) +
-   scale_fill_manual(values = c("blue", 'red'))
-
-cor.p8 <- ggplot(data = head.wt.tr.type.df, aes(x = Type, y = Count, fill = Diet)) +
-   geom_bar(stat = "identity", color = "black", position = "dodge", width = 0.4, alpha = 0.3) +
-   theme_minimal() + 
-   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1.0)) +
-   scale_fill_manual(values = c("blue", 'red'))
-
-cor.p9 <- ggplot(data = head.ht.type.df, aes(x = Type, y = Count, fill = Diet)) +
-   geom_bar(stat = "identity", color = "black", position = "dodge", width = 0.4, alpha = 0.3) +
-   theme_minimal() + 
-   theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1.0)) +
-   scale_fill_manual(values = c("blue", 'red'))
-
-multiplot(cor.p7, cor.p8, cor.p9, cols=3)
+fisher.test(matrix(c(1317, 6433, 945, 6805), nrow = 2)) # p < 2.2e-16
+fisher.test(matrix(c(1003, 6747, 945, 6805), nrow = 2)) # p = 0.1672
+fisher.test(matrix(c(1177, 6573, 1317, 6433), nrow = 2)) # p = 0.002373
+fisher.test(matrix(c(1608, 6142, 1306, 6444), nrow = 2)) # p = 5.928e-10
 
 ## Plot correlation coefficient vs FDR
 par(mfrow=c(4, 4), mar = c(4, 4, 1, 1) + 0.1, mgp = c(2, 0, 0) + 0.5)
@@ -709,7 +763,6 @@ ecount(body.ht.fd.g.fdr5)
 ecount(body.ht.cd.g.fdr5)
 
 # Network Visualization ---------------------------------------------------
-
 V(head.wt.fd.g.fdr10)$label <- NA
 V(head.wt.cd.g.fdr10)$label <- NA
 V(head.ht.fd.g.fdr10)$label <- NA
