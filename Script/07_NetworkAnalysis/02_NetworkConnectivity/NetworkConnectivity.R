@@ -3,7 +3,7 @@
 ## Part: 7-2
 ## Author: Yang Lyu
 ## Date created: 10/01/2019
-## Date modified: 08/15/2020
+## Date modified: 02/23/2021
 
 # Environment Settings ----------------------------------------------------
 library(igraph)
@@ -405,46 +405,80 @@ body.wt.cd.gc.freq <- as.numeric(table(degree(body.wt.cd.gc)) /sum(table(degree(
 body.ht.fd.gc.freq <- as.numeric(table(degree(body.ht.fd.gc)) /sum(table(degree(body.ht.fd.gc))))
 body.ht.cd.gc.freq <- as.numeric(table(degree(body.ht.cd.gc)) /sum(table(degree(body.ht.cd.gc))))
 
+sum(head.wt.fd.gc.freq[head.wt.fd.gc.degree >= vcount(head.wt.fd.gc) * 0.3])
+sum(head.wt.cd.gc.freq[head.wt.cd.gc.degree >= vcount(head.wt.cd.gc) * 0.3])
+sum(head.ht.fd.gc.freq[head.ht.fd.gc.degree >= vcount(head.ht.fd.gc) * 0.3])
+sum(head.ht.cd.gc.freq[head.ht.cd.gc.degree >= vcount(head.ht.cd.gc) * 0.3])
+
+sum(body.wt.fd.gc.freq[body.wt.fd.gc.degree >= vcount(body.wt.fd.gc) * 0.3])
+sum(body.wt.cd.gc.freq[body.wt.cd.gc.degree >= vcount(body.wt.cd.gc) * 0.3])
+sum(body.ht.fd.gc.freq[body.ht.fd.gc.degree >= vcount(body.ht.fd.gc) * 0.3])
+sum(body.ht.cd.gc.freq[body.ht.cd.gc.degree >= vcount(body.ht.cd.gc) * 0.3])
+
 par(mfrow=c(4, 2), mar = c(3, 3, 1, 0) + 0.5, mgp = c(1.5, 0, 0) + 0.5)
 plot(log2(head.wt.fd.gc.degree), head.wt.fd.gc.freq, col="blue",
      xlim = c(0, 6), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Heads / w1118 / FD")
 
+points(log2(head.wt.fd.gc.degree[head.wt.fd.gc.degree >= vcount(head.wt.fd.gc) * 0.3]), 
+       head.wt.fd.gc.freq[head.wt.fd.gc.degree >= vcount(head.wt.fd.gc) * 0.3], col="red")
+
 plot(log2(head.wt.cd.gc.degree), head.wt.cd.gc.freq, col="blue",
      xlim = c(0, 6), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Heads / w1118 / CD")
+
+points(log2(head.wt.cd.gc.degree[head.wt.cd.gc.degree >= vcount(head.wt.cd.gc) * 0.3]), 
+       head.wt.cd.gc.freq[head.wt.cd.gc.degree >= vcount(head.wt.cd.gc) * 0.3], col="red")
 
 plot(log2(head.ht.fd.gc.degree), head.ht.fd.gc.freq, col="blue",
      xlim = c(0, 6), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Heads / 5-HT2A / FD")
 
+points(log2(head.ht.fd.gc.degree[head.ht.fd.gc.degree >= vcount(head.ht.fd.gc) * 0.3]), 
+       head.ht.fd.gc.freq[head.ht.fd.gc.degree >= vcount(head.ht.fd.gc) * 0.3], col="red")
+
 plot(log2(head.ht.cd.gc.degree), head.ht.cd.gc.freq, col="blue",
      xlim = c(0, 6), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Heads / 5-HT2A / CD")
+
+points(log2(head.ht.cd.gc.degree[head.ht.cd.gc.degree >= vcount(head.ht.cd.gc) * 0.3]), 
+       head.ht.cd.gc.freq[head.ht.cd.gc.degree >= vcount(head.ht.cd.gc) * 0.3], col="red")
 
 plot(log2(body.wt.fd.gc.degree), body.wt.fd.gc.freq, col="blue",
      xlim = c(0, 7), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Bodies / w1118 / FD")
 
+points(log2(body.wt.fd.gc.degree[body.wt.fd.gc.degree >= vcount(body.wt.fd.gc) * 0.3]), 
+       body.wt.fd.gc.freq[body.wt.fd.gc.degree >= vcount(body.wt.fd.gc) * 0.3], col="red")
+
 plot(log2(body.wt.cd.gc.degree), body.wt.cd.gc.freq, col="blue",
      xlim = c(0, 7), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Bodies / w1118 / CD")
+
+points(log2(body.wt.cd.gc.degree[body.wt.cd.gc.degree >= vcount(body.wt.cd.gc) * 0.3]), 
+       body.wt.cd.gc.freq[body.wt.cd.gc.degree >= vcount(body.wt.cd.gc) * 0.3], col="red")
 
 plot(log2(body.ht.fd.gc.degree), body.ht.fd.gc.freq, col="blue",
      xlim = c(0, 7), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Bodies / 5-HT2A / FD")
 
+points(log2(body.ht.fd.gc.degree[body.ht.fd.gc.degree >= vcount(body.ht.fd.gc) * 0.3]), 
+       body.ht.fd.gc.freq[body.ht.fd.gc.degree >= vcount(body.ht.fd.gc) * 0.3], col="red")
+
 plot(log2(body.ht.cd.gc.degree), body.ht.cd.gc.freq, col="blue",
      xlim = c(0, 7), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Bodies / 5-HT2A / CD")
+
+points(log2(body.ht.cd.gc.degree[body.ht.cd.gc.degree >= vcount(body.ht.cd.gc) * 0.3]), 
+       body.ht.cd.gc.freq[body.ht.cd.gc.degree >= vcount(body.ht.cd.gc) * 0.3], col="red")
 
 # Average of Shortest Path Analysis ---------------------------------------
 ## Calculate diameter
@@ -557,8 +591,17 @@ dist.p2 <- ggplot(df.core.body, aes(x = Group, y = Distance2)) +
 multiplot(dist.p2, dist.p1,  
           layout = matrix(c(2, 1), nrow = 1, byrow = T))
 
+## One-way ANOVA
+res.aov.head.core <- aov(Distance ~ Diet, data = df.core.head[df.core.head$Genotype == "w1118", ])
+res.aov.body.core <- aov(Distance ~ Diet, data = df.core.body[df.core.body$Genotype == "w1118", ])
+
+summary(res.aov.head.core)
+summary(res.aov.body.core)
+
+## Two-way ANOVA
 res.aov.head.core <- aov(Distance ~ Diet + Genotype + Diet:Genotype, data = df.core.head)
 res.aov.body.core <- aov(Distance ~ Diet + Genotype + Diet:Genotype, data = df.core.body)
 
 summary(res.aov.head.core)
 summary(res.aov.body.core)
+
