@@ -3,7 +3,7 @@
 ## Part: 7-2
 ## Author: Yang Lyu
 ## Date created: 10/01/2019
-## Date modified: 02/23/2021
+## Date modified: 04/18/2021
 
 # Environment Settings ----------------------------------------------------
 library(igraph)
@@ -44,6 +44,11 @@ head.ht.edge.delta <- head.ht.cd.edge - head.ht.fd.edge
 body.wt.edge.delta <- body.wt.cd.edge - body.wt.fd.edge
 body.ht.edge.delta <- body.ht.cd.edge - body.ht.fd.edge
 
+head.fd.edge.delta <- head.ht.fd.edge - head.wt.fd.edge
+head.cd.edge.delta <- head.ht.cd.edge - head.wt.cd.edge
+body.fd.edge.delta <- body.ht.fd.edge - body.wt.fd.edge
+body.cd.edge.delta <- body.ht.cd.edge - body.wt.cd.edge
+
 ## Permutation
 perm.head.wt.fd.edge.n    <- numeric()
 perm.head.wt.cd.edge.n    <- numeric()
@@ -67,6 +72,11 @@ perm.head.wt.edge.delta <- numeric()
 perm.head.ht.edge.delta <- numeric()
 perm.body.wt.edge.delta <- numeric()
 perm.body.ht.edge.delta <- numeric()
+
+perm.head.fd.edge.delta <- numeric()
+perm.head.cd.edge.delta <- numeric()
+perm.body.fd.edge.delta <- numeric()
+perm.body.cd.edge.delta <- numeric()
 
 for(i in 1:10000) {
   perm.head <- sample(1:nrow(data.head))
@@ -181,6 +191,11 @@ for(i in 1:10000) {
   perm.head.ht.edge.delta[i] <- perm.head.ht.cd.edge.n[i] - perm.head.ht.fd.edge.n[i]
   perm.body.wt.edge.delta[i] <- perm.body.wt.cd.edge.n[i] - perm.body.wt.fd.edge.n[i]
   perm.body.ht.edge.delta[i] <- perm.body.ht.cd.edge.n[i] - perm.body.ht.fd.edge.n[i]
+  
+  perm.head.fd.edge.delta[i] <- perm.head.ht.fd.edge.n[i] - perm.head.wt.fd.edge.n[i]
+  perm.head.cd.edge.delta[i] <- perm.head.ht.cd.edge.n[i] - perm.head.wt.cd.edge.n[i]
+  perm.body.fd.edge.delta[i] <- perm.body.ht.fd.edge.n[i] - perm.body.wt.fd.edge.n[i]
+  perm.body.cd.edge.delta[i] <- perm.body.ht.cd.edge.n[i] - perm.body.wt.cd.edge.n[i]
 }
 
 ### Find percentile
@@ -318,6 +333,7 @@ segments(5.7, body.ht.cd.edge,
 legend("topleft", lwd = c(4, 4), col = c("black", "red"), 
        legend = c("Median (Permutation)", "Observed"), bty = "n", cex = 0.8)
 
+### Plot dietary effects
 par(mfrow=c(1, 2), mar = c(6, 4, 1, 0) + 0.5, mgp = c(2, 0, 0) + 0.5)
 plot(jitter(rep(1:2, each = 10000)), 
      c(perm.head.wt.edge.delta, perm.head.ht.edge.delta),
@@ -384,39 +400,118 @@ segments(1.7, body.ht.edge.delta,
 text (1, 2700, "P=0.1025")
 text (2, 2700, "P=0.2758")
 
+## Plot genotype effects
+par(mfrow=c(1, 2), mar = c(4, 4, 4, 0) + 0.5, mgp = c(2, 0, 0) + 0.5)
+plot(jitter(rep(1:2, each = 10000)), 
+     c(perm.head.fd.edge.delta, perm.head.cd.edge.delta),
+     pch = 3, col = c("grey47","grey57", "grey67", "grey77", "grey87", "grey97"),
+     xlim = c(0.2, 2.8), ylim = c(-2000, 2000), 
+     las = 1, axes = F, xaxs = "i", yaxs = "i",
+     xlab = "", ylab = "Change of edge number\nby 5-HT2A", main = "Heads")
+
+axis(1, at = seq(1, 2, by = 1), las = 2, labels = c("FD", "CD"))
+axis(2, las = 1)
+
+segments(0.7, median(perm.head.fd.edge.delta), 
+         1.3, median(perm.head.fd.edge.delta), 
+         col = "black", lwd = 4)
+
+segments(0.7, head.fd.edge.delta, 
+         1.3, head.fd.edge.delta, 
+         col = "red", lwd = 4)
+
+segments(1.7, median(perm.head.cd.edge.delta), 
+         2.3, median(perm.head.cd.edge.delta), 
+         col = "black", lwd = 4)
+
+segments(1.7, head.cd.edge.delta, 
+         2.3, head.cd.edge.delta, 
+         col = "red", lwd = 4)
+
+1-sum(head.fd.edge.delta >= perm.head.fd.edge.delta)/10000
+1-sum(head.cd.edge.delta >= perm.head.cd.edge.delta)/10000
+
+text (1, 1600, "P=0.30")
+text (2, 1600, "P=0.0022", col = "red")
+
+plot(jitter(rep(1:2, each = 10000)), 
+     c(perm.body.fd.edge.delta, perm.body.cd.edge.delta),
+     pch = 3, col = c("grey47","grey57", "grey67", "grey77", "grey87", "grey97"),
+     xlim = c(0.2, 2.8), ylim = c(-3000, 3000), 
+     las = 1, axes = F, xaxs = "i", yaxs = "i",
+     xlab = "", ylab = "Change of edge number\nby 5-HT2A", main = "Bodies")
+
+axis(1, at = seq(1, 2, by = 1), las = 2, labels = c("FD", "CD"))
+axis(2, las = 1)
+
+segments(0.7, median(perm.body.fd.edge.delta), 
+         1.3, median(perm.body.fd.edge.delta), 
+         col = "black", lwd = 4)
+
+segments(0.7, body.fd.edge.delta, 
+         1.3, body.fd.edge.delta, 
+         col = "red", lwd = 4)
+
+segments(1.7, median(perm.body.cd.edge.delta), 
+         2.3, median(perm.body.cd.edge.delta), 
+         col = "black", lwd = 4)
+
+segments(1.7, body.cd.edge.delta, 
+         2.3, body.cd.edge.delta, 
+         col = "red", lwd = 4)
+
+1-sum(body.fd.edge.delta >= perm.body.fd.edge.delta)/10000
+1-sum(body.cd.edge.delta >= perm.body.cd.edge.delta)/10000
+
+text (1, 2400, "P=0.40")
+text (2, 2400, "P=0.22")
+
 # Connectivity Analysis ---------------------------------------------------
 head.wt.fd.gc.degree <- as.numeric(names(table(degree(head.wt.fd.gc))))
 head.wt.cd.gc.degree <- as.numeric(names(table(degree(head.wt.cd.gc))))
+head.wt.fd2cd.gc.degree <- as.numeric(names(table(degree(head.wt.fd2cd.gc))))
+head.wt.cd2fd.gc.degree <- as.numeric(names(table(degree(head.wt.cd2fd.gc))))
 head.ht.fd.gc.degree <- as.numeric(names(table(degree(head.ht.fd.gc))))
 head.ht.cd.gc.degree <- as.numeric(names(table(degree(head.ht.cd.gc))))
 
 body.wt.fd.gc.degree <- as.numeric(names(table(degree(body.wt.fd.gc))))
 body.wt.cd.gc.degree <- as.numeric(names(table(degree(body.wt.cd.gc))))
+body.wt.fd2cd.gc.degree <- as.numeric(names(table(degree(body.wt.fd2cd.gc))))
+body.wt.cd2fd.gc.degree <- as.numeric(names(table(degree(body.wt.cd2fd.gc))))
 body.ht.fd.gc.degree <- as.numeric(names(table(degree(body.ht.fd.gc))))
 body.ht.cd.gc.degree <- as.numeric(names(table(degree(body.ht.cd.gc))))
 
 head.wt.fd.gc.freq <- as.numeric(table(degree(head.wt.fd.gc)) /sum(table(degree(head.wt.fd.gc))))
 head.wt.cd.gc.freq <- as.numeric(table(degree(head.wt.cd.gc)) /sum(table(degree(head.wt.cd.gc))))
+head.wt.fd2cd.gc.freq <- as.numeric(table(degree(head.wt.fd2cd.gc)) /sum(table(degree(head.wt.fd2cd.gc))))
+head.wt.cd2fd.gc.freq <- as.numeric(table(degree(head.wt.cd2fd.gc)) /sum(table(degree(head.wt.cd2fd.gc))))
 head.ht.fd.gc.freq <- as.numeric(table(degree(head.ht.fd.gc)) /sum(table(degree(head.ht.fd.gc))))
 head.ht.cd.gc.freq <- as.numeric(table(degree(head.ht.cd.gc)) /sum(table(degree(head.ht.cd.gc))))
 
 body.wt.fd.gc.freq <- as.numeric(table(degree(body.wt.fd.gc)) /sum(table(degree(body.wt.fd.gc))))
 body.wt.cd.gc.freq <- as.numeric(table(degree(body.wt.cd.gc)) /sum(table(degree(body.wt.cd.gc))))
+body.wt.fd2cd.gc.freq <- as.numeric(table(degree(body.wt.fd2cd.gc)) /sum(table(degree(body.wt.fd2cd.gc))))
+body.wt.cd2fd.gc.freq <- as.numeric(table(degree(body.wt.cd2fd.gc)) /sum(table(degree(body.wt.cd2fd.gc))))
 body.ht.fd.gc.freq <- as.numeric(table(degree(body.ht.fd.gc)) /sum(table(degree(body.ht.fd.gc))))
 body.ht.cd.gc.freq <- as.numeric(table(degree(body.ht.cd.gc)) /sum(table(degree(body.ht.cd.gc))))
 
 sum(head.wt.fd.gc.freq[head.wt.fd.gc.degree >= vcount(head.wt.fd.gc) * 0.3])
 sum(head.wt.cd.gc.freq[head.wt.cd.gc.degree >= vcount(head.wt.cd.gc) * 0.3])
+sum(head.wt.fd2cd.gc.freq[head.wt.fd2cd.gc.degree >= vcount(head.wt.fd2cd.gc) * 0.3])
+sum(head.wt.cd2fd.gc.freq[head.wt.cd2fd.gc.degree >= vcount(head.wt.cd2fd.gc) * 0.3])
 sum(head.ht.fd.gc.freq[head.ht.fd.gc.degree >= vcount(head.ht.fd.gc) * 0.3])
 sum(head.ht.cd.gc.freq[head.ht.cd.gc.degree >= vcount(head.ht.cd.gc) * 0.3])
 
 sum(body.wt.fd.gc.freq[body.wt.fd.gc.degree >= vcount(body.wt.fd.gc) * 0.3])
 sum(body.wt.cd.gc.freq[body.wt.cd.gc.degree >= vcount(body.wt.cd.gc) * 0.3])
+sum(body.wt.fd2cd.gc.freq[body.wt.fd2cd.gc.degree >= vcount(body.wt.fd2cd.gc) * 0.3])
+sum(body.wt.cd2fd.gc.freq[body.wt.cd2fd.gc.degree >= vcount(body.wt.cd2fd.gc) * 0.3])
 sum(body.ht.fd.gc.freq[body.ht.fd.gc.degree >= vcount(body.ht.fd.gc) * 0.3])
 sum(body.ht.cd.gc.freq[body.ht.cd.gc.degree >= vcount(body.ht.cd.gc) * 0.3])
 
-par(mfrow=c(4, 2), mar = c(3, 3, 1, 0) + 0.5, mgp = c(1.5, 0, 0) + 0.5)
-plot(log2(head.wt.fd.gc.degree), head.wt.fd.gc.freq, col="blue",
+## Plot heads data
+par(mfrow=c(3, 2), mar = c(3, 3, 1, 0) + 0.5, mgp = c(1.5, 0, 0) + 0.5)
+plot(log2(head.wt.fd.gc.degree), head.wt.fd.gc.freq, col="grey27",
      xlim = c(0, 6), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Heads / w1118 / FD")
@@ -424,7 +519,7 @@ plot(log2(head.wt.fd.gc.degree), head.wt.fd.gc.freq, col="blue",
 points(log2(head.wt.fd.gc.degree[head.wt.fd.gc.degree >= vcount(head.wt.fd.gc) * 0.3]), 
        head.wt.fd.gc.freq[head.wt.fd.gc.degree >= vcount(head.wt.fd.gc) * 0.3], col="red")
 
-plot(log2(head.wt.cd.gc.degree), head.wt.cd.gc.freq, col="blue",
+plot(log2(head.wt.cd.gc.degree), head.wt.cd.gc.freq, col="grey27",
      xlim = c(0, 6), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Heads / w1118 / CD")
@@ -432,7 +527,23 @@ plot(log2(head.wt.cd.gc.degree), head.wt.cd.gc.freq, col="blue",
 points(log2(head.wt.cd.gc.degree[head.wt.cd.gc.degree >= vcount(head.wt.cd.gc) * 0.3]), 
        head.wt.cd.gc.freq[head.wt.cd.gc.degree >= vcount(head.wt.cd.gc) * 0.3], col="red")
 
-plot(log2(head.ht.fd.gc.degree), head.ht.fd.gc.freq, col="blue",
+plot(log2(head.wt.fd2cd.gc.degree), head.wt.fd2cd.gc.freq, col="grey27",
+     xlim = c(0, 6), ylim = c(0, 0.15), las = 1,
+     xlab = c("Log2-Degree"), ylab = c("Proportion"), 
+     main = "Heads / w1118 / FD2CD")
+
+points(log2(head.wt.fd2cd.gc.degree[head.wt.fd2cd.gc.degree >= vcount(head.wt.fd2cd.gc) * 0.3]), 
+       head.wt.fd2cd.gc.freq[head.wt.fd2cd.gc.degree >= vcount(head.wt.fd2cd.gc) * 0.3], col="red")
+
+plot(log2(head.wt.cd2fd.gc.degree), head.wt.cd2fd.gc.freq, col="grey27",
+     xlim = c(0, 6), ylim = c(0, 0.15), las = 1,
+     xlab = c("Log2-Degree"), ylab = c("Proportion"), 
+     main = "Heads / w1118 / CD2FD")
+
+points(log2(head.wt.cd2fd.gc.degree[head.wt.cd2fd.gc.degree >= vcount(head.wt.cd2fd.gc) * 0.3]), 
+       head.wt.cd2fd.gc.freq[head.wt.cd2fd.gc.degree >= vcount(head.wt.cd2fd.gc) * 0.3], col="red")
+
+plot(log2(head.ht.fd.gc.degree), head.ht.fd.gc.freq, col="grey27",
      xlim = c(0, 6), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Heads / 5-HT2A / FD")
@@ -440,7 +551,7 @@ plot(log2(head.ht.fd.gc.degree), head.ht.fd.gc.freq, col="blue",
 points(log2(head.ht.fd.gc.degree[head.ht.fd.gc.degree >= vcount(head.ht.fd.gc) * 0.3]), 
        head.ht.fd.gc.freq[head.ht.fd.gc.degree >= vcount(head.ht.fd.gc) * 0.3], col="red")
 
-plot(log2(head.ht.cd.gc.degree), head.ht.cd.gc.freq, col="blue",
+plot(log2(head.ht.cd.gc.degree), head.ht.cd.gc.freq, col="grey27",
      xlim = c(0, 6), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Heads / 5-HT2A / CD")
@@ -448,7 +559,9 @@ plot(log2(head.ht.cd.gc.degree), head.ht.cd.gc.freq, col="blue",
 points(log2(head.ht.cd.gc.degree[head.ht.cd.gc.degree >= vcount(head.ht.cd.gc) * 0.3]), 
        head.ht.cd.gc.freq[head.ht.cd.gc.degree >= vcount(head.ht.cd.gc) * 0.3], col="red")
 
-plot(log2(body.wt.fd.gc.degree), body.wt.fd.gc.freq, col="blue",
+## Plot bodies data
+par(mfrow=c(3, 2), mar = c(3, 3, 1, 0) + 0.5, mgp = c(1.5, 0, 0) + 0.5)
+plot(log2(body.wt.fd.gc.degree), body.wt.fd.gc.freq, col="grey27",
      xlim = c(0, 7), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Bodies / w1118 / FD")
@@ -456,7 +569,7 @@ plot(log2(body.wt.fd.gc.degree), body.wt.fd.gc.freq, col="blue",
 points(log2(body.wt.fd.gc.degree[body.wt.fd.gc.degree >= vcount(body.wt.fd.gc) * 0.3]), 
        body.wt.fd.gc.freq[body.wt.fd.gc.degree >= vcount(body.wt.fd.gc) * 0.3], col="red")
 
-plot(log2(body.wt.cd.gc.degree), body.wt.cd.gc.freq, col="blue",
+plot(log2(body.wt.cd.gc.degree), body.wt.cd.gc.freq, col="grey27",
      xlim = c(0, 7), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Bodies / w1118 / CD")
@@ -464,7 +577,23 @@ plot(log2(body.wt.cd.gc.degree), body.wt.cd.gc.freq, col="blue",
 points(log2(body.wt.cd.gc.degree[body.wt.cd.gc.degree >= vcount(body.wt.cd.gc) * 0.3]), 
        body.wt.cd.gc.freq[body.wt.cd.gc.degree >= vcount(body.wt.cd.gc) * 0.3], col="red")
 
-plot(log2(body.ht.fd.gc.degree), body.ht.fd.gc.freq, col="blue",
+plot(log2(body.wt.fd2cd.gc.degree), body.wt.fd2cd.gc.freq, col="grey27",
+     xlim = c(0, 7), ylim = c(0, 0.15), las = 1,
+     xlab = c("Log2-Degree"), ylab = c("Proportion"), 
+     main = "Bodies / w1118 / FD2CD")
+
+points(log2(body.wt.fd2cd.gc.degree[body.wt.fd2cd.gc.degree >= vcount(body.wt.fd2cd.gc) * 0.3]), 
+       body.wt.fd2cd.gc.freq[body.wt.fd2cd.gc.degree >= vcount(body.wt.fd2cd.gc) * 0.3], col="red")
+
+plot(log2(body.wt.cd2fd.gc.degree), body.wt.cd2fd.gc.freq, col="grey27",
+     xlim = c(0, 7), ylim = c(0, 0.15), las = 1,
+     xlab = c("Log2-Degree"), ylab = c("Proportion"), 
+     main = "Bodies / w1118 / CD2FD")
+
+points(log2(body.wt.cd2fd.gc.degree[body.wt.cd2fd.gc.degree >= vcount(body.wt.cd2fd.gc) * 0.3]), 
+       body.wt.cd2fd.gc.freq[body.wt.cd2fd.gc.degree >= vcount(body.wt.cd2fd.gc) * 0.3], col="red")
+
+plot(log2(body.ht.fd.gc.degree), body.ht.fd.gc.freq, col="grey27",
      xlim = c(0, 7), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Bodies / 5-HT2A / FD")
@@ -472,7 +601,7 @@ plot(log2(body.ht.fd.gc.degree), body.ht.fd.gc.freq, col="blue",
 points(log2(body.ht.fd.gc.degree[body.ht.fd.gc.degree >= vcount(body.ht.fd.gc) * 0.3]), 
        body.ht.fd.gc.freq[body.ht.fd.gc.degree >= vcount(body.ht.fd.gc) * 0.3], col="red")
 
-plot(log2(body.ht.cd.gc.degree), body.ht.cd.gc.freq, col="blue",
+plot(log2(body.ht.cd.gc.degree), body.ht.cd.gc.freq, col="grey27",
      xlim = c(0, 7), ylim = c(0, 0.15), las = 1,
      xlab = c("Log2-Degree"), ylab = c("Proportion"), 
      main = "Bodies / 5-HT2A / CD")
@@ -484,85 +613,118 @@ points(log2(body.ht.cd.gc.degree[body.ht.cd.gc.degree >= vcount(body.ht.cd.gc) *
 ## Calculate diameter
 diameter(head.wt.fd.gc) ### 10
 diameter(head.wt.cd.gc) ### 13
+diameter(head.wt.fd2cd.gc) ### 8
+diameter(head.wt.cd2fd.gc) ### 11
 diameter(head.ht.fd.gc) ### 8
 diameter(head.ht.cd.gc) ### 7
+
 diameter(body.wt.fd.gc) ### 7
 diameter(body.wt.cd.gc) ### 8
+diameter(body.wt.fd2cd.gc) ### 9
+diameter(body.wt.cd2fd.gc) ### 7
 diameter(body.ht.fd.gc) ### 5
 diameter(body.ht.cd.gc) ### 7
 
 ## Calculate average distance
 average.path.length(head.wt.fd.gc) ### 2.88
 average.path.length(head.wt.cd.gc) ### 4.37
+average.path.length(head.wt.fd2cd.gc) ### 3.00
+average.path.length(head.wt.cd2fd.gc) ### 2.85
 average.path.length(head.ht.fd.gc) ### 2.33
 average.path.length(head.ht.cd.gc) ### 2.26
 average.path.length(body.wt.fd.gc) ### 2.25
 average.path.length(body.wt.cd.gc) ### 2.42
+average.path.length(body.wt.fd2cd.gc) ### 2.55
+average.path.length(body.wt.cd2fd.gc) ### 2.08
 average.path.length(body.ht.fd.gc) ### 1.86
 average.path.length(body.ht.cd.gc) ### 2.18
 
 ## Calculate distances (all the shortest paths in the network)
 dist.head.core.wt.fd <- distances(head.wt.fd.gc)
 dist.head.core.wt.cd <- distances(head.wt.cd.gc)
+dist.head.core.wt.fd2cd <- distances(head.wt.fd2cd.gc)
+dist.head.core.wt.cd2fd <- distances(head.wt.cd2fd.gc)
 dist.head.core.ht.fd <- distances(head.ht.fd.gc)
 dist.head.core.ht.cd <- distances(head.ht.cd.gc)
 dist.body.core.wt.fd <- distances(body.wt.fd.gc)
 dist.body.core.wt.cd <- distances(body.wt.cd.gc)
+dist.body.core.wt.fd2cd <- distances(body.wt.fd2cd.gc)
+dist.body.core.wt.cd2fd <- distances(body.wt.cd2fd.gc)
 dist.body.core.ht.fd <- distances(body.ht.fd.gc)
 dist.body.core.ht.cd <- distances(body.ht.cd.gc)
 
 dist.head.core.wt.fd[upper.tri(dist.head.core.wt.fd, diag = T)] <- NA
 dist.head.core.wt.cd[upper.tri(dist.head.core.wt.cd, diag = T)] <- NA
+dist.head.core.wt.fd2cd[upper.tri(dist.head.core.wt.fd2cd, diag = T)] <- NA
+dist.head.core.wt.cd2fd[upper.tri(dist.head.core.wt.cd2fd, diag = T)] <- NA
 dist.head.core.ht.fd[upper.tri(dist.head.core.ht.fd, diag = T)] <- NA
 dist.head.core.ht.cd[upper.tri(dist.head.core.ht.cd, diag = T)] <- NA
 dist.body.core.wt.fd[upper.tri(dist.body.core.wt.fd, diag = T)] <- NA
 dist.body.core.wt.cd[upper.tri(dist.body.core.wt.cd, diag = T)] <- NA
+dist.body.core.wt.fd2cd[upper.tri(dist.body.core.wt.fd2cd, diag = T)] <- NA
+dist.body.core.wt.cd2fd[upper.tri(dist.body.core.wt.cd2fd, diag = T)] <- NA
 dist.body.core.ht.fd[upper.tri(dist.body.core.ht.fd, diag = T)] <- NA
 dist.body.core.ht.cd[upper.tri(dist.body.core.ht.cd, diag = T)] <- NA
 
 dist.head.core.wt.fd <- as.vector(dist.head.core.wt.fd)
 dist.head.core.wt.cd <- as.vector(dist.head.core.wt.cd)
+dist.head.core.wt.fd2cd <- as.vector(dist.head.core.wt.fd2cd)
+dist.head.core.wt.cd2fd <- as.vector(dist.head.core.wt.cd2fd)
 dist.head.core.ht.fd <- as.vector(dist.head.core.ht.fd)
 dist.head.core.ht.cd <- as.vector(dist.head.core.ht.cd)
 dist.body.core.wt.fd <- as.vector(dist.body.core.wt.fd)
 dist.body.core.wt.cd <- as.vector(dist.body.core.wt.cd)
+dist.body.core.wt.fd2cd <- as.vector(dist.body.core.wt.fd2cd)
+dist.body.core.wt.cd2fd <- as.vector(dist.body.core.wt.cd2fd)
 dist.body.core.ht.fd <- as.vector(dist.body.core.ht.fd)
 dist.body.core.ht.cd <- as.vector(dist.body.core.ht.cd)
 
 dist.head.core.wt.fd <- dist.head.core.wt.fd[!is.na(dist.head.core.wt.fd)]
 dist.head.core.wt.cd <- dist.head.core.wt.cd[!is.na(dist.head.core.wt.cd)]
+dist.head.core.wt.fd2cd <- dist.head.core.wt.fd2cd[!is.na(dist.head.core.wt.fd2cd)]
+dist.head.core.wt.cd2fd <- dist.head.core.wt.cd2fd[!is.na(dist.head.core.wt.cd2fd)]
 dist.head.core.ht.fd <- dist.head.core.ht.fd[!is.na(dist.head.core.ht.fd)]
 dist.head.core.ht.cd <- dist.head.core.ht.cd[!is.na(dist.head.core.ht.cd)]
 dist.body.core.wt.fd <- dist.body.core.wt.fd[!is.na(dist.body.core.wt.fd)]
 dist.body.core.wt.cd <- dist.body.core.wt.cd[!is.na(dist.body.core.wt.cd)]
+dist.body.core.wt.fd2cd <- dist.body.core.wt.fd2cd[!is.na(dist.body.core.wt.fd2cd)]
+dist.body.core.wt.cd2fd <- dist.body.core.wt.cd2fd[!is.na(dist.body.core.wt.cd2fd)]
 dist.body.core.ht.fd <- dist.body.core.ht.fd[!is.na(dist.body.core.ht.fd)]
 dist.body.core.ht.cd <- dist.body.core.ht.cd[!is.na(dist.body.core.ht.cd)]
 
 ## Calculate and plot the average distances in networks
 dist.head.core.wt.fd <- dist.head.core.wt.fd[is.finite(dist.head.core.wt.fd)]
 dist.head.core.wt.cd <- dist.head.core.wt.cd[is.finite(dist.head.core.wt.cd)]
+dist.head.core.wt.fd2cd <- dist.head.core.wt.fd2cd[is.finite(dist.head.core.wt.fd2cd)]
+dist.head.core.wt.cd2fd <- dist.head.core.wt.cd2fd[is.finite(dist.head.core.wt.cd2fd)]
 dist.head.core.ht.fd <- dist.head.core.ht.fd[is.finite(dist.head.core.ht.fd)]
 dist.head.core.ht.cd <- dist.head.core.ht.cd[is.finite(dist.head.core.ht.cd)]
 dist.body.core.wt.fd <- dist.body.core.wt.fd[is.finite(dist.body.core.wt.fd)] 
 dist.body.core.wt.cd <- dist.body.core.wt.cd[is.finite(dist.body.core.wt.cd)]
+dist.body.core.wt.fd2cd <- dist.body.core.wt.fd2cd[is.finite(dist.body.core.wt.fd2cd)] 
+dist.body.core.wt.cd2fd <- dist.body.core.wt.cd2fd[is.finite(dist.body.core.wt.cd2fd)]
 dist.body.core.ht.fd <- dist.body.core.ht.fd[is.finite(dist.body.core.ht.fd)] 
 dist.body.core.ht.cd <- dist.body.core.ht.cd[is.finite(dist.body.core.ht.cd)]
 
 df.core.distance <- c(dist.head.core.wt.fd, dist.head.core.wt.cd, 
+                      dist.head.core.wt.fd2cd, dist.head.core.wt.cd2fd, 
                       dist.head.core.ht.fd, dist.head.core.ht.cd,
                       dist.body.core.wt.fd, dist.body.core.wt.cd, 
+                      dist.body.core.wt.fd2cd, dist.body.core.wt.cd2fd, 
                       dist.body.core.ht.fd, dist.body.core.ht.cd)
 
-df.core.group <- rep(c("Head/w1118/FD", "Head/w1118/CD", "Head/5-HT2A/FD", "Head/5-HT2A/CD",
-                       "Body/w1118/FD", "Body/w1118/CD", "Body/5-HT2A/FD", "Body/5-HT2A/CD"),
+df.core.group <- rep(c("Head/w1118/FD", "Head/w1118/CD", "Head/w1118/FD2CD", "Head/w1118/CD2FD", "Head/5-HT2A/FD", "Head/5-HT2A/CD",
+                       "Body/w1118/FD", "Body/w1118/CD", "Body/w1118/FD2CD", "Body/w1118/CD2FD", "Body/5-HT2A/FD", "Body/5-HT2A/CD"),
                      c(length(dist.head.core.wt.fd), length(dist.head.core.wt.cd), 
+                       length(dist.head.core.wt.fd2cd), length(dist.head.core.wt.cd2fd),
                        length(dist.head.core.ht.fd), length(dist.head.core.ht.cd),
                        length(dist.body.core.wt.fd), length(dist.body.core.wt.cd), 
+                       length(dist.body.core.wt.fd2cd), length(dist.body.core.wt.cd2fd), 
                        length(dist.body.core.ht.fd), length(dist.body.core.ht.cd)))
 
 df.core.group <- factor(df.core.group, 
-                        levels = c("Head/w1118/FD", "Head/w1118/CD", "Head/5-HT2A/FD", "Head/5-HT2A/CD",
-                                   "Body/w1118/FD", "Body/w1118/CD", "Body/5-HT2A/FD", "Body/5-HT2A/CD"))
+                        levels = c("Head/w1118/FD", "Head/w1118/CD", "Head/w1118/FD2CD", "Head/w1118/CD2FD", "Head/5-HT2A/FD", "Head/5-HT2A/CD",
+                                   "Body/w1118/FD", "Body/w1118/CD", "Body/w1118/FD2CD", "Body/w1118/CD2FD", "Body/5-HT2A/FD", "Body/5-HT2A/CD"))
 
 xc <- matrix(unlist(strsplit(as.character(df.core.group), "/")), ncol = 3, byrow = T)
 
@@ -604,4 +766,3 @@ res.aov.body.core <- aov(Distance ~ Diet + Genotype + Diet:Genotype, data = df.c
 
 summary(res.aov.head.core)
 summary(res.aov.body.core)
-

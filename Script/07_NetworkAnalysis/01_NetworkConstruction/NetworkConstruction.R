@@ -3,12 +3,14 @@
 ## Part: 7-1
 ## Author: Yang Lyu
 ## Date created: 09/29/2019
-## Date modified: 02/13/2021
+## Date modified: 04/11/2021
 
 # Environment Settings ----------------------------------------------------
 library(Hmisc)
 library(reshape2)
 library(igraph)
+library(easyGgplot2)
+library(gtools)
 library(MetaboAnalystR)
 source("Script/07_NetworkAnalysis/01_NetworkConstruction/multiplot.R")
 source("Script/07_NetworkAnalysis/01_NetworkConstruction/rcorr.adjust.R")
@@ -252,7 +254,6 @@ cor.p1 <- ggplot2.histogram(data=head.wt.cor.df, xName='Cor', groupName='Diet', 
    labs(title = "Head/w1118",x = "Correlation Coefficient", y = "Count") +
    coord_cartesian(xlim = c(-1, 1), ylim = c(0, 800)) 
 
-
 cor.p2 <- ggplot2.histogram(data=head.wt.tr1.cor.df, xName='Cor', groupName='Diet', legendPosition="top", 
                             groupColors=c('deepskyblue', 'gray50'), bins = 10) +
    scale_color_manual(values = c("black", "black", "black")) +
@@ -386,30 +387,12 @@ fisher.test(matrix(c(1177, 6573, 1317, 6433), nrow = 2)) # p = 0.002373
 fisher.test(matrix(c(1608, 6142, 1306, 6444), nrow = 2)) # p = 5.928e-10
 
 ## Plot correlation coefficient vs FDR
-par(mfrow=c(4, 4), mar = c(4, 4, 1, 1) + 0.1, mgp = c(2, 0, 0) + 0.5)
+par(mfrow=c(3, 4), mar = c(4, 4, 1, 1) + 0.1, mgp = c(2, 0, 0) + 0.5)
 plot(abs(head.wt.fd.cor[upper.tri(head.wt.fd.cor, diag = FALSE)]), head.wt.fd.padj[upper.tri(head.wt.fd.padj, diag = FALSE)],
      xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / w1118 / FD")
 
 plot(abs(head.wt.cd.cor[upper.tri(head.wt.cd.cor, diag = FALSE)]), head.wt.cd.padj[upper.tri(head.wt.cd.padj, diag = FALSE)],
      xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / w1118 / CD")
-
-plot(abs(head.ht.fd.cor[upper.tri(head.ht.fd.cor, diag = FALSE)]), head.ht.fd.padj[upper.tri(head.ht.fd.padj, diag = FALSE)],
-     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / 5-HT2A / FD")
-
-plot(abs(head.ht.cd.cor[upper.tri(head.ht.cd.cor, diag = FALSE)]), head.ht.cd.padj[upper.tri(head.ht.cd.padj, diag = FALSE)],
-     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / 5-HT2A / CD")
-
-plot(abs(head.wt.fd2cd.cor[upper.tri(head.wt.fd2cd.cor, diag = FALSE)]), head.wt.fd2cd.padj[upper.tri(head.wt.fd2cd.padj, diag = FALSE)],
-     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / w1118 / FD2CD")
-
-plot(abs(head.wt.cd2fd.cor[upper.tri(head.wt.cd2fd.cor, diag = FALSE)]), head.wt.cd2fd.padj[upper.tri(head.wt.cd2fd.padj, diag = FALSE)],
-     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / w1118 / CD2FD")
-
-plot(abs(head.ht.fd2cd.cor[upper.tri(head.ht.fd2cd.cor, diag = FALSE)]), head.ht.fd2cd.padj[upper.tri(head.ht.fd2cd.padj, diag = FALSE)],
-     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / 5-HT2A / FD2CD")
-
-plot(abs(head.ht.cd2fd.cor[upper.tri(head.ht.cd2fd.cor, diag = FALSE)]), head.ht.cd2fd.padj[upper.tri(head.ht.cd2fd.padj, diag = FALSE)],
-     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / 5-HT2A / CD2FD")
 
 plot(abs(body.wt.fd.cor[upper.tri(body.wt.fd.cor, diag = FALSE)]), body.wt.fd.padj[upper.tri(body.wt.fd.padj, diag = FALSE)],
      xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Bodies / w1118 / FD")
@@ -417,11 +400,11 @@ plot(abs(body.wt.fd.cor[upper.tri(body.wt.fd.cor, diag = FALSE)]), body.wt.fd.pa
 plot(abs(body.wt.cd.cor[upper.tri(body.wt.cd.cor, diag = FALSE)]), body.wt.cd.padj[upper.tri(body.wt.cd.padj, diag = FALSE)],
      xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Bodies / w1118 / CD")
 
-plot(abs(body.ht.fd.cor[upper.tri(body.ht.fd.cor, diag = FALSE)]), body.ht.fd.padj[upper.tri(body.ht.fd.padj, diag = FALSE)],
-     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Bodies / 5-HT2A / FD")
+plot(abs(head.wt.fd2cd.cor[upper.tri(head.wt.fd2cd.cor, diag = FALSE)]), head.wt.fd2cd.padj[upper.tri(head.wt.fd2cd.padj, diag = FALSE)],
+     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / w1118 / FD2CD")
 
-plot(abs(body.ht.cd.cor[upper.tri(body.ht.cd.cor, diag = FALSE)]), body.ht.cd.padj[upper.tri(body.ht.cd.padj, diag = FALSE)],
-     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Bodies / 5-HT2A / CD")
+plot(abs(head.wt.cd2fd.cor[upper.tri(head.wt.cd2fd.cor, diag = FALSE)]), head.wt.cd2fd.padj[upper.tri(head.wt.cd2fd.padj, diag = FALSE)],
+     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / w1118 / CD2FD")
 
 plot(abs(body.wt.fd2cd.cor[upper.tri(body.wt.fd2cd.cor, diag = FALSE)]), body.wt.fd2cd.padj[upper.tri(body.wt.fd2cd.padj, diag = FALSE)],
      xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Bodies / w1118 / FD2CD")
@@ -429,11 +412,18 @@ plot(abs(body.wt.fd2cd.cor[upper.tri(body.wt.fd2cd.cor, diag = FALSE)]), body.wt
 plot(abs(body.wt.cd2fd.cor[upper.tri(body.wt.cd2fd.cor, diag = FALSE)]), body.wt.cd2fd.padj[upper.tri(body.wt.cd2fd.padj, diag = FALSE)],
      xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Bodies / w1118 / CD2FD")
 
-plot(abs(body.ht.fd2cd.cor[upper.tri(body.ht.fd2cd.cor, diag = FALSE)]), body.ht.fd2cd.padj[upper.tri(body.ht.fd2cd.padj, diag = FALSE)],
-     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Bodies / 5-HT2A / FD2CD")
+plot(abs(head.ht.fd.cor[upper.tri(head.ht.fd.cor, diag = FALSE)]), head.ht.fd.padj[upper.tri(head.ht.fd.padj, diag = FALSE)],
+     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / 5-HT2A / FD")
 
-plot(abs(body.ht.cd2fd.cor[upper.tri(body.ht.cd2fd.cor, diag = FALSE)]), body.ht.cd2fd.padj[upper.tri(body.ht.cd2fd.padj, diag = FALSE)],
-     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Bodies / 5-HT2A / CD2FD")
+plot(abs(head.ht.cd.cor[upper.tri(head.ht.cd.cor, diag = FALSE)]), head.ht.cd.padj[upper.tri(head.ht.cd.padj, diag = FALSE)],
+     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Heads / 5-HT2A / CD")
+
+plot(abs(body.ht.fd.cor[upper.tri(body.ht.fd.cor, diag = FALSE)]), body.ht.fd.padj[upper.tri(body.ht.fd.padj, diag = FALSE)],
+     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Bodies / 5-HT2A / FD")
+
+plot(abs(body.ht.cd.cor[upper.tri(body.ht.cd.cor, diag = FALSE)]), body.ht.cd.padj[upper.tri(body.ht.cd.padj, diag = FALSE)],
+     xlab = "Correlation Coefficient", ylab = "FDR", las = 1, main = "Bodies / 5-HT2A / CD")
+
 ### Will try FDR = 0.1 or FDR = 0.05
 
 ## Get the rho equivalent of the FDR = 0.1 or FDR = 0.05
@@ -744,51 +734,73 @@ body.ht.cd2fd.g.fdr5 <- graph.adjacency(body.ht.cd2fd.adj.fdr5, mode = "undirect
 
 ecount(head.wt.fd.g.fdr10)
 ecount(head.wt.cd.g.fdr10)
+ecount(head.wt.fd2cd.g.fdr10)
+ecount(head.wt.cd2fd.g.fdr10)
 ecount(head.ht.fd.g.fdr10)
 ecount(head.ht.cd.g.fdr10)
 
 ecount(body.wt.fd.g.fdr10)
 ecount(body.wt.cd.g.fdr10)
+ecount(body.wt.fd2cd.g.fdr10)
+ecount(body.wt.cd2fd.g.fdr10)
 ecount(body.ht.fd.g.fdr10)
 ecount(body.ht.cd.g.fdr10)
 
 ecount(head.wt.fd.g.fdr5)
 ecount(head.wt.cd.g.fdr5)
+ecount(head.wt.fd2cd.g.fdr5)
+ecount(head.wt.cd2fd.g.fdr5)
 ecount(head.ht.fd.g.fdr5)
 ecount(head.ht.cd.g.fdr5)
 
 ecount(body.wt.fd.g.fdr5)
 ecount(body.wt.cd.g.fdr5)
+ecount(body.wt.fd2cd.g.fdr5)
+ecount(body.wt.cd2fd.g.fdr5)
 ecount(body.ht.fd.g.fdr5)
 ecount(body.ht.cd.g.fdr5)
 
 # Network Visualization ---------------------------------------------------
 V(head.wt.fd.g.fdr10)$label <- NA
 V(head.wt.cd.g.fdr10)$label <- NA
+V(head.wt.fd2cd.g.fdr10)$label <- NA
+V(head.wt.cd2fd.g.fdr10)$label <- NA
 V(head.ht.fd.g.fdr10)$label <- NA
 V(head.ht.cd.g.fdr10)$label <- NA
 
 V(body.wt.fd.g.fdr10)$label <- NA
 V(body.wt.cd.g.fdr10)$label <- NA
+V(body.wt.fd2cd.g.fdr10)$label <- NA
+V(body.wt.cd2fd.g.fdr10)$label <- NA
 V(body.ht.fd.g.fdr10)$label <- NA
 V(body.ht.cd.g.fdr10)$label <- NA
 
 V(head.wt.fd.g.fdr5)$label <- NA
 V(head.wt.cd.g.fdr5)$label <- NA
+V(head.wt.fd2cd.g.fdr5)$label <- NA
+V(head.wt.cd2fd.g.fdr5)$label <- NA
 V(head.ht.fd.g.fdr5)$label <- NA
 V(head.ht.cd.g.fdr5)$label <- NA
 
 V(body.wt.fd.g.fdr5)$label <- NA
 V(body.wt.cd.g.fdr5)$label <- NA
+V(body.wt.fd2cd.g.fdr5)$label <- NA
+V(body.wt.cd2fd.g.fdr5)$label <- NA
 V(body.ht.fd.g.fdr5)$label <- NA
 V(body.ht.cd.g.fdr5)$label <- NA
 
-par(mfrow=c(4, 4), mar = c(1, 1, 2.5, 1) + 0.1, mgp = c(2, 0, 0) + 0.5)
+par(mfrow=c(4, 6), mar = c(1, 1, 2.5, 1) + 0.1, mgp = c(2, 0, 0) + 0.5)
 ## FDR = 0.10
 plot(head.wt.fd.g.fdr10, layout = layout.fruchterman.reingold, main = "Heads / w1118 / FD",
      vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(head.wt.cd.g.fdr10, layout = layout.fruchterman.reingold, main = "Heads / w1118 / CD",
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
+
+plot(head.wt.fd2cd.g.fdr10, layout = layout.fruchterman.reingold, main = "Heads / w1118 / FD2CD",
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
+
+plot(head.wt.cd2fd.g.fdr10, layout = layout.fruchterman.reingold, main = "Heads / w1118 / CD2FD",
      vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(head.ht.fd.g.fdr10, layout = layout.fruchterman.reingold, main = "Heads / 5-HT2A / FD",
@@ -801,6 +813,12 @@ plot(body.wt.fd.g.fdr10, layout = layout.fruchterman.reingold, main = "Bodies / 
      vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.wt.cd.g.fdr10, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / CD",
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
+
+plot(body.wt.fd2cd.g.fdr10, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / FD2CD",
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
+
+plot(body.wt.cd2fd.g.fdr10, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / CD2FD",
      vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.ht.fd.g.fdr10, layout = layout.fruchterman.reingold, main = "Bodies / 5-HT2A / FD",
@@ -816,16 +834,29 @@ plot(head.wt.fd.g.fdr5, layout = layout.fruchterman.reingold, main = "Heads / w1
 plot(head.wt.cd.g.fdr5, layout = layout.fruchterman.reingold, main = "Heads / w1118 / CD",
      vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
+plot(head.wt.fd2cd.g.fdr5, layout = layout.fruchterman.reingold, main = "Heads / w1118 / FD2CD",
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
+
+plot(head.wt.cd2fd.g.fdr5, layout = layout.fruchterman.reingold, main = "Heads / w1118 / CD2FD",
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
+
 plot(head.ht.fd.g.fdr5, layout = layout.fruchterman.reingold, main = "Heads / 5-HT2A / FD",
      vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(head.ht.cd.g.fdr5, layout = layout.fruchterman.reingold, main = "Heads / 5-HT2A / CD",
      vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
+
 plot(body.wt.fd.g.fdr5, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / FD",
      vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.wt.cd.g.fdr5, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / CD",
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
+
+plot(body.wt.fd2cd.g.fdr5, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / FD2CD",
+     vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
+
+plot(body.wt.cd2fd.g.fdr5, layout = layout.fruchterman.reingold, main = "Bodies / w1118 / CD2FD",
      vertex.color = "deepskyblue", vertex.frame.color = "grey1", vertex.size = 10)
 
 plot(body.ht.fd.g.fdr5, layout = layout.fruchterman.reingold, main = "Bodies / 5-HT2A / FD",
@@ -929,21 +960,29 @@ body.ht.cd2fd.weighted.g <- graph.adjacency(body.ht.cd2fd.weighted.adj, mode = "
 ## Network edge number check
 ecount(head.wt.fd.g)
 ecount(head.wt.cd.g)
+ecount(head.wt.fd2cd.g)
+ecount(head.wt.cd2fd.g)
 ecount(head.ht.fd.g)
 ecount(head.ht.cd.g)
 
 ecount(head.wt.fd.weighted.g) # should be the same as the unweighted network
 ecount(head.wt.cd.weighted.g) # should be the same as the unweighted network
+ecount(head.wt.fd2cd.weighted.g) # should be the same as the unweighted network
+ecount(head.wt.cd2fd.weighted.g) # should be the same as the unweighted network
 ecount(head.ht.fd.weighted.g) # should be the same as the unweighted network
 ecount(head.ht.cd.weighted.g) # should be the same as the unweighted network
 
 ecount(body.wt.fd.g)
 ecount(body.wt.cd.g)
+ecount(body.wt.fd2cd.g)
+ecount(body.wt.cd2fd.g)
 ecount(body.ht.fd.g)
 ecount(body.ht.cd.g)
 
 ecount(body.wt.fd.weighted.g) # should be the same as the unweighted network
 ecount(body.wt.cd.weighted.g) # should be the same as the unweighted network
+ecount(body.wt.fd2cd.weighted.g) # should be the same as the unweighted network
+ecount(body.wt.cd2fd.weighted.g) # should be the same as the unweighted network
 ecount(body.ht.fd.weighted.g) # should be the same as the unweighted network
 ecount(body.ht.cd.weighted.g) # should be the same as the unweighted network
 
@@ -956,46 +995,68 @@ nrow(combinations(125,2))
 # Extract Subnetwork ------------------------------------------------------
 clusters(head.wt.fd.g)
 clusters(head.wt.cd.g)
+clusters(head.wt.fd2cd.g)
+clusters(head.wt.cd2fd.g)
 clusters(head.ht.fd.g)
 clusters(head.ht.cd.g)
 clusters(body.wt.fd.g)
 clusters(body.wt.cd.g)
+clusters(body.wt.fd2cd.g)
+clusters(body.wt.cd2fd.g)
 clusters(body.ht.fd.g)
 clusters(body.ht.cd.g)
 
 head.wt.fd.gc <- decompose.graph(head.wt.fd.g)[[order(sapply(decompose.graph(head.wt.fd.g), vcount), decreasing = 1)[1]]]
 head.wt.cd.gc <- decompose.graph(head.wt.cd.g)[[order(sapply(decompose.graph(head.wt.cd.g), vcount), decreasing = 1)[1]]]
+head.wt.fd2cd.gc <- decompose.graph(head.wt.fd2cd.g)[[order(sapply(decompose.graph(head.wt.fd2cd.g), vcount), decreasing = 1)[1]]]
+head.wt.cd2fd.gc <- decompose.graph(head.wt.cd2fd.g)[[order(sapply(decompose.graph(head.wt.cd2fd.g), vcount), decreasing = 1)[1]]]
 head.ht.fd.gc <- decompose.graph(head.ht.fd.g)[[order(sapply(decompose.graph(head.ht.fd.g), vcount), decreasing = 1)[1]]]
 head.ht.cd.gc <- decompose.graph(head.ht.cd.g)[[order(sapply(decompose.graph(head.ht.cd.g), vcount), decreasing = 1)[1]]]
+
 body.wt.fd.gc <- decompose.graph(body.wt.fd.g)[[order(sapply(decompose.graph(body.wt.fd.g), vcount), decreasing = 1)[1]]]
 body.wt.cd.gc <- decompose.graph(body.wt.cd.g)[[order(sapply(decompose.graph(body.wt.cd.g), vcount), decreasing = 1)[1]]]
+body.wt.fd2cd.gc <- decompose.graph(body.wt.fd2cd.g)[[order(sapply(decompose.graph(body.wt.fd2cd.g), vcount), decreasing = 1)[1]]]
+body.wt.cd2fd.gc <- decompose.graph(body.wt.cd2fd.g)[[order(sapply(decompose.graph(body.wt.cd2fd.g), vcount), decreasing = 1)[1]]]
 body.ht.fd.gc <- decompose.graph(body.ht.fd.g)[[order(sapply(decompose.graph(body.ht.fd.g), vcount), decreasing = 1)[1]]]
 body.ht.cd.gc <- decompose.graph(body.ht.cd.g)[[order(sapply(decompose.graph(body.ht.cd.g), vcount), decreasing = 1)[1]]]
 
 table(sapply(decompose.graph(head.wt.fd.g), vcount))
 table(sapply(decompose.graph(head.wt.cd.g), vcount))
+table(sapply(decompose.graph(head.wt.fd2cd.g), vcount))
+table(sapply(decompose.graph(head.wt.cd2fd.g), vcount))
 table(sapply(decompose.graph(head.ht.fd.g), vcount))
 table(sapply(decompose.graph(head.ht.cd.g), vcount))
 table(sapply(decompose.graph(body.wt.fd.g), vcount))
 table(sapply(decompose.graph(body.wt.cd.g), vcount))
+table(sapply(decompose.graph(body.wt.fd2cd.g), vcount))
+table(sapply(decompose.graph(body.wt.cd2fd.g), vcount))
 table(sapply(decompose.graph(body.ht.fd.g), vcount))
 table(sapply(decompose.graph(body.ht.cd.g), vcount))
 
 vcount(head.wt.fd.gc) ### 99
 vcount(head.wt.cd.gc) ### 72
+vcount(head.wt.fd2cd.gc) ### 95
+vcount(head.wt.cd2fd.gc) ### 95
 vcount(head.ht.fd.gc) ### 90
 vcount(head.ht.cd.gc) ### 93
 vcount(body.wt.fd.gc) ### 124
 vcount(body.wt.cd.gc) ### 121
+vcount(body.wt.fd2cd.gc) ### 119
+vcount(body.wt.cd2fd.gc) ### 118
 vcount(body.ht.fd.gc) ### 117
 vcount(body.ht.cd.gc) ### 121
 
 ecount(head.wt.fd.gc)/ecount(head.wt.fd.g) ### 1
 ecount(head.wt.cd.gc)/ecount(head.wt.cd.g) ### 0.96
+ecount(head.wt.fd2cd.gc)/ecount(head.wt.fd2cd.g) ### 0.998
+ecount(head.wt.cd2fd.gc)/ecount(head.wt.cd2fd.g) ### 0.999
 ecount(head.ht.fd.gc)/ecount(head.ht.fd.g) ### 0.996
 ecount(head.ht.cd.gc)/ecount(head.ht.cd.g) ### 0.998
+
 ecount(body.wt.fd.gc)/ecount(body.wt.fd.g) ### 1
 ecount(body.wt.cd.gc)/ecount(body.wt.cd.g) ### 1
+ecount(body.wt.fd2cd.gc)/ecount(body.wt.fd2cd.g) ### 0.998
+ecount(body.wt.cd2fd.gc)/ecount(body.wt.cd2fd.g) ### 0.999
 ecount(body.ht.fd.gc)/ecount(body.ht.fd.g) ### 0.999
 ecount(body.ht.cd.gc)/ecount(body.ht.cd.g) ### 1
 
@@ -1100,7 +1161,7 @@ save(head.wt.fd.cor, head.wt.cd.cor, head.ht.fd.cor, head.ht.cd.cor,
      head.wt.fd2cd.weighted.g, head.wt.cd2fd.weighted.g, head.ht.fd2cd.weighted.g, head.ht.cd2fd.weighted.g,
      body.wt.fd2cd.weighted.g, body.wt.cd2fd.weighted.g, body.ht.fd2cd.weighted.g, body.ht.cd2fd.weighted.g,
      
-     head.wt.fd.gc, head.wt.cd.gc, head.ht.fd.gc, head.ht.cd.gc,
-     body.wt.fd.gc, body.wt.cd.gc, body.ht.fd.gc, body.ht.cd.gc,
+     head.wt.fd.gc, head.wt.cd.gc, head.wt.fd2cd.gc, head.wt.cd2fd.gc, head.ht.fd.gc, head.ht.cd.gc,
+     body.wt.fd.gc, body.wt.cd.gc, body.wt.fd2cd.gc, body.wt.cd2fd.gc, body.ht.fd.gc, body.ht.cd.gc,
      
      file = "Data/ProcessedData/NetworkObject-FlyChoiceDiet.Rdata")
